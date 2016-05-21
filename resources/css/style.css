@@ -2,3 +2,13 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.website-description {
+  text-align: center;
+  margin: 20px;
+}
+
+.col {
+  border: 1px solid black;
+  text-align: center;
+}
