@@ -7,7 +7,7 @@ window.onload = function(){
 var apiLink = "http://www.behindthename.com/api/";
 
 
-var getRandomNames = function(num) {
+var getRandomNames = function(gender,num) {
   
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
@@ -34,14 +34,22 @@ xhttp.onreadystatechange = function() {
   }
 };
 
-xhttp.open("GET", "http://www.behindthename.com/api/random.php?usage=eng&number=" + num + "&key=st918764", true);
+
+var apiLink = "http://www.behindthename.com/api/random.php?usage=eng&number=" + num + "&gender=" + gender + "&key=st918764";
+
+xhttp.open("GET", apiLink, true);
 xhttp.send();
 
 }
 
 document.getElementById("random-button").onclick = function() {
   
-  getRandomNames(6)
+  var gender = document.querySelector('input[name = "gender"]:checked').value;
+  
+  //console.log(gender);
+  //console.log("male:" + document.getElementById("random-m").value);
+  
+  getRandomNames(gender,6)
 };
 
 
