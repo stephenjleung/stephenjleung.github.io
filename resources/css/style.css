@@ -12,3 +12,12 @@
   border: 1px solid black;
   text-align: center;
 }
+
+.random-female-button {
+    background-color: #EE83C6;
+    border-color: #E964B8;
+}
+
+.random-female-button:hover {
+    background-color: #E964B8;
+}
