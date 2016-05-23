@@ -1,7 +1,5 @@
 //baby name api key st918764
 
-window.onload = function(){ 
-
   // Loads a saved or default Favorites list
   if (Boolean(window.localStorage._stephenjleung_favorites))
     var favorites = JSON.parse(window.localStorage.getItem('_stephenjleung_favorites'));
@@ -15,6 +13,8 @@ window.onload = function(){
           node.removeChild(node.firstChild);
         }
   };
+  
+
   
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(gender,num) {
@@ -59,28 +59,29 @@ window.onload = function(){
     if (index > -1) {
       favorites.splice(index, 1);
       saveToLocalStorage(favorites);
+      updateFavorites();
     }
       
   };
   
   // Function to refresh or reload the current Favorites list
   var updateFavorites = function() {
-    emptyElementById("favorites");
     
-    document.getElementById("favorites").insertAdjacentHTML("beforeend", "<div><ul>");
+    emptyElementById("favorites-list");
     
     for (var i = 0; i < favorites.length; i++) {
-        document.getElementById("favorites").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard btn-lg'>" + favorites[i] + "</button><button class='btn btn-danger favorite-remove' value="+ favorites[i] + ">Remove</button></h2>" + "</li>");
+        document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard btn-lg'>" + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove' value=" + favorites[i] + ">Remove</button></h2>" + "</li>");
       }
-      
-    document.getElementById("favorites").insertAdjacentHTML("beforeend", "</ul></div>");
+    
   };
   
   // Function to update the LocalStorage value
   var saveToLocalStorage = function(favorites) {
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
+
   
+  window.onload = function(){
   // Action triggered when "Get Random" button is clicked
   document.getElementById("random-button").onclick = function() {
     var gender = document.querySelector('input[name = "gender"]:checked').value;
@@ -93,7 +94,7 @@ window.onload = function(){
     addToFavorites(nameToAdd);
     updateFavorites();
   };
-  
-  updateFavorites();
 
-};
+  updateFavorites();
+  
+  };
