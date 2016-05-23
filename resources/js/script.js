@@ -14,8 +14,6 @@
         }
   };
   
-
-  
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(gender,num) {
     var xhttp = new XMLHttpRequest();
@@ -50,6 +48,7 @@
       favorites.push(name);
       saveToLocalStorage(favorites);
       document.getElementById("favorite-input").value = "";
+      updateFavorites();
     }
   };
   
@@ -61,18 +60,14 @@
       saveToLocalStorage(favorites);
       updateFavorites();
     }
-      
   };
   
   // Function to refresh or reload the current Favorites list
   var updateFavorites = function() {
-    
     emptyElementById("favorites-list");
-    
     for (var i = 0; i < favorites.length; i++) {
-        document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard btn-lg'>" + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove' value=" + favorites[i] + ">Remove</button></h2>" + "</li>");
+        document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard btn-lg'>" + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove' value='" + favorites[i] + "'>Remove</button></h2>" + "</li>");
       }
-    
   };
   
   // Function to update the LocalStorage value
@@ -92,7 +87,14 @@
   document.getElementById("favorite-button-add").onclick = function() {
     var nameToAdd = document.getElementById("favorite-input").value;
     addToFavorites(nameToAdd);
-    updateFavorites();
+  };
+  
+  // Action triggered when you press Enter within the Favorites List input field
+  document.getElementById("favorite-input").onkeypress = function(e) {
+    if (e.which == 13) {
+      var nameToAdd = document.getElementById("favorite-input").value;
+      addToFavorites(nameToAdd);
+    }
   };
 
   updateFavorites();
