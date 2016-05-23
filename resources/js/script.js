@@ -26,12 +26,12 @@
         var firstName = "";
         
         //Empties the list of random names in the DOM before generating a new list
-        emptyElementById("random-name");
+        emptyElementById("random-names-list");
         
         // Generates the list of random names obtained from API call
         for (var i = 0; i < x.length; i++) {
           firstName = x[i].textContent;
-          document.getElementById("random-name").insertAdjacentHTML("beforeend", firstName + "</br>");
+          document.getElementById("random-names-list").insertAdjacentHTML("beforeend", "<li class='random-name'><h2><button class='btn btn-standard'>" + firstName + "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm random-name-add' value='" + firstName + "'>Add to Favorites</button></h2>" + "</li>");
         }
       }
     };
@@ -44,7 +44,7 @@
 
   // Function to add a name to favorites and update LocalStorage
   var addToFavorites = function(name) {
-    if (name != "") {
+    if ((name != "") && (favorites.indexOf(name) < 0)) {
       favorites.push(name);
       saveToLocalStorage(favorites);
       document.getElementById("favorite-input").value = "";
@@ -66,8 +66,8 @@
   var updateFavorites = function() {
     emptyElementById("favorites-list");
     for (var i = 0; i < favorites.length; i++) {
-        document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard btn-lg'>" + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove' value='" + favorites[i] + "'>Remove</button></h2>" + "</li>");
-      }
+      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard'>" + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove btn-sm' value='" + favorites[i] + "'>Remove</button></h2>" + "</li>");
+    }
   };
   
   // Function to update the LocalStorage value
@@ -98,5 +98,6 @@
   };
 
   updateFavorites();
+  getRandomNames("m",6)
   
   };

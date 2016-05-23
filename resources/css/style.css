@@ -23,8 +23,8 @@
 }
 
 ul {
-    padding: 0;
-    list-style-type: none;
+  padding: 0;
+  list-style-type: none;
 }
 
 .favorite-item {
@@ -35,7 +35,7 @@ ul {
   display: none;
   cursor: pointer;
   margin-left: 10px;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
 .favorite-item:hover .favorite-remove {
@@ -45,4 +45,16 @@ ul {
 
 .favorite-item button:focus {
   outline: 0;
+}
+
+.random-name-add {
+  display: none;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-top: 4px;
+}
+
+.random-name:hover .random-name-add{
+  display: inline;
+  position: absolute;
 }
