@@ -16,7 +16,7 @@ window.onload = function(){
         }
   };
   
-  // Function to get random baby names based on filters (API GET request here)
+  // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(gender,num) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -43,20 +43,7 @@ window.onload = function(){
     xhttp.send();
   
   };
-  
-  // Action triggered when "Get Random" button is clicked
-  document.getElementById("random-button").onclick = function() {
-    var gender = document.querySelector('input[name = "gender"]:checked').value;
-    getRandomNames(gender,6);
-  };
-  
-  // Action triggered when you click the "Add" to favorites button
-  document.getElementById("favorite-button-add").onclick = function() {
-    var nameToAdd = document.getElementById("favorite-input").value;
-    addToFavorites(nameToAdd);
-    updateFavorites();
-  };
-  
+
   // Function to add a name to favorites and update LocalStorage
   var addToFavorites = function(name) {
     if (name != "") {
@@ -78,21 +65,30 @@ window.onload = function(){
   
   // Function to refresh or reload the current Favorites list
   var updateFavorites = function() {
-    
     emptyElementById("favorites");
-    
     for (var i = 0; i < favorites.length; i++) {
         document.getElementById("favorites").insertAdjacentHTML("beforeend", favorites[i] + "</br>");
       }
   };
   
-  updateFavorites();
-  
-  
-  
   // Function to update the LocalStorage value
   var saveToLocalStorage = function(favorites) {
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
+  
+  // Action triggered when "Get Random" button is clicked
+  document.getElementById("random-button").onclick = function() {
+    var gender = document.querySelector('input[name = "gender"]:checked').value;
+    getRandomNames(gender,6);
+  };
+  
+  // Action triggered when you click the "Add" to favorites button
+  document.getElementById("favorite-button-add").onclick = function() {
+    var nameToAdd = document.getElementById("favorite-input").value;
+    addToFavorites(nameToAdd);
+    updateFavorites();
+  };
+  
+  updateFavorites();
 
 };
