@@ -1,5 +1,5 @@
-//baby name api key st918764
-
+  //baby name api key st918764
+  
   // Loads a saved or default Favorites list
   if (Boolean(window.localStorage._stephenjleung_favorites))
     var favorites = JSON.parse(window.localStorage.getItem('_stephenjleung_favorites'));
@@ -41,7 +41,7 @@
     xhttp.send();
   
   };
-
+  
   // Function to add a name to favorites and update LocalStorage
   var addToFavorites = function(name) {
     if ((name != "") && (favorites.indexOf(name) < 0)) {
@@ -74,30 +74,30 @@
   var saveToLocalStorage = function(favorites) {
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
-
   
+    
   window.onload = function(){
-  // Action triggered when "Get Random" button is clicked
-  document.getElementById("random-button").onclick = function() {
-    var gender = document.querySelector('input[name = "gender"]:checked').value;
-    getRandomNames(gender,6);
-  };
-  
-  // Action triggered when you click the "Add" to favorites button
-  document.getElementById("favorite-button-add").onclick = function() {
-    var nameToAdd = document.getElementById("favorite-input").value;
-    addToFavorites(nameToAdd);
-  };
-  
-  // Action triggered when you press Enter within the Favorites List input field
-  document.getElementById("favorite-input").onkeypress = function(e) {
-    if (e.which == 13) {
+    // Action triggered when "Get Random" button is clicked
+    document.getElementById("random-button").onclick = function() {
+      var gender = document.querySelector('input[name = "gender"]:checked').value;
+      getRandomNames(gender,6);
+    };
+    
+    // Action triggered when you click the "Add" to favorites button
+    document.getElementById("favorite-button-add").onclick = function() {
       var nameToAdd = document.getElementById("favorite-input").value;
       addToFavorites(nameToAdd);
-    }
-  };
-
-  updateFavorites();
-  getRandomNames("m",6)
+    };
+    
+    // Action triggered when you press Enter within the Favorites List input field
+    document.getElementById("favorite-input").onkeypress = function(e) {
+      if (e.which == 13) {
+        var nameToAdd = document.getElementById("favorite-input").value;
+        addToFavorites(nameToAdd);
+      }
+    };
   
+    updateFavorites();
+    getRandomNames("m",6);
+    
   };
