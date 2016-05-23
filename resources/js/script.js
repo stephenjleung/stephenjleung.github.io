@@ -2,7 +2,11 @@
 
 
 window.onload = function(){ 
-    
+
+if (Boolean(window.localStorage._stephenjleung_favoritenames))
+  var favorites = JSON.parse(window.localStorage.getItem('_stephenjleung_favoritenames'));
+else
+  var favorites = ["Dave", "John", "Steve","Adam"];
 
 var apiLink = "http://www.behindthename.com/api/";
 
@@ -53,6 +57,30 @@ document.getElementById("random-button").onclick = function() {
 };
 
 
-//getRandomNames(6);
+var addToFavorites = function(name) {
+  favorites.push(name);
+  saveToLocalStorage(favorites);
+};
+
+var removeFromFavorites = function(name) {
+  var index = favorites.indexOf(name);
+  if (index > -1) {
+    favorites.splice(index, 1);
+    saveToLocalStorage(favorites);
+  }
+    
+};
+
+var updateFavorites = function() {
+  for (var i = 0; i < favorites.length; i++) {
+      document.getElementById("favorites").insertAdjacentHTML("beforeend", favorites[i] + "</br>");
+    }
+};
+
+updateFavorites();
+
+var saveToLocalStorage = function(favorites) {
+  window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
+};
 
 };
