@@ -14,10 +14,31 @@
 }
 
 .random-female-button {
-    background-color: #EE83C6;
-    border-color: #E964B8;
+  background-color: #EE83C6;
+  border-color: #E964B8;
 }
 
 .random-female-button:hover {
-    background-color: #E964B8;
+  background-color: #E964B8;
+}
+
+.favorite-item {
+  list-style: none;
+}
+
+
+.favorite-remove {
+  display: none;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.favorite-item:hover .favorite-remove {
+  display: inline;
+  position: absolute;
+}
+
+.favorite-item button:focus {
+  outline: 0;
 }

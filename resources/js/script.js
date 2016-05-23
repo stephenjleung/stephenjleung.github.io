@@ -66,9 +66,14 @@ window.onload = function(){
   // Function to refresh or reload the current Favorites list
   var updateFavorites = function() {
     emptyElementById("favorites");
+    
+    document.getElementById("favorites").insertAdjacentHTML("beforeend", "<div><ul>");
+    
     for (var i = 0; i < favorites.length; i++) {
-        document.getElementById("favorites").insertAdjacentHTML("beforeend", favorites[i] + "</br>");
+        document.getElementById("favorites").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard btn-lg'>" + favorites[i] + "</button><button class='btn btn-danger favorite-remove' value="+ favorites[i] + ">Remove</button></h2>" + "</li>");
       }
+      
+    document.getElementById("favorites").insertAdjacentHTML("beforeend", "</ul></div>");
   };
   
   // Function to update the LocalStorage value
