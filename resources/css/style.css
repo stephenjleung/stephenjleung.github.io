@@ -15,7 +15,7 @@
 
 .random-options {
   margin-top: 20px;
-  margin-bottom: 20px;
+  
 }
 
 .random-female-button {
@@ -25,6 +25,15 @@
 
 .random-female-button:hover {
   background-color: #E964B8;
+}
+
+#origin-description {
+  padding-top: 10px;
+  font-style: italic;
+}
+
+#random-button {
+  margin-top: 10px;
 }
 
 ul {
@@ -63,3 +72,4 @@ ul {
   display: inline;
   position: absolute;
 }
+

@@ -33,11 +33,13 @@
               </label>
             </div>
           </div>
-          <div  class="random-options">
+          <div class="random-options">
             Origin:
-            <select id="origin-dropdown" name="origin">
+            <select onchange='updateOriginDescription(options[selectedIndex].text)' id="origin-dropdown" name="origin">
               <option value="eng">English</option>
             </select>
+          </div>
+          <div id="origin-description">
           </div>
         </div>
         <div>

@@ -70,9 +70,6 @@
   csvToObject(filepath1, originAndCode);
   csvToObject(filepath2, originAndDescription);
   
-  //console.log(originAndCode);
-  //console.log(originAndDescription);  
-  
   // Loads the origin dropdown.  Utilizes the object created from the csvToObject function.  The Origin list is stored locally as a csv.
   var loadOriginDropdown = function() {
     for (var i in originAndCode) {
@@ -141,7 +138,12 @@
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
   
-    
+  // Updates the Origin description in Random Generator area
+  var updateOriginDescription = function(origin) {
+    document.getElementById("origin-description").innerHTML = originAndDescription[origin];
+  };
+  
+  // Actions to be performed only after the window has loaded  
   window.onload = function(){
     // Action triggered when "Get Random" button is clicked
     document.getElementById("random-button").onclick = function() {
@@ -172,5 +174,8 @@
     
     // Populate the Origin dropdown list
     loadOriginDropdown();
+    
+    // Populate the initial Origin description
+    updateOriginDescription("English");
     
   };
