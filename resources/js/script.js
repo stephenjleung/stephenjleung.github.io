@@ -63,6 +63,9 @@
           }
         }
       };
+      // Setting ASYNC to false here generates a console warning, however I am not
+      // worried about it since the csv files are stored locally on the web server.
+      // It shouldn't cause browser hanging.
       xhttp.open("GET", filepath, false);
       xhttp.send();
   };
@@ -94,11 +97,15 @@
         // Generates the list of random names obtained from API call
         for (var i = 0; i < x.length; i++) {
           firstName = x[i].textContent;
-          document.getElementById("random-names-list").insertAdjacentHTML("beforeend", "<li class='random-name'><h2><button class='btn btn-standard'>" + firstName + "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm random-name-add' value='" + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+          document.getElementById("random-names-list").insertAdjacentHTML("beforeend", 
+            "<li class='random-name'><h2><button class='btn btn-standard'>" + firstName + 
+            "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm random-name-add' value='"
+            + firstName + "'>Add to Favorites</button></h2>" + "</li>");
         }
       }
     };
-  
+    
+    // The API call
     var apiLink = "http://www.behindthename.com/api/random.php?usage=" + originCode + "&number=" + num + "&gender=" + gender + "&key=st918764";
     xhttp.open("GET", apiLink, true);
     xhttp.send();
@@ -129,7 +136,9 @@
   var updateFavorites = function() {
     emptyElementById("favorites-list");
     for (var i = 0; i < favorites.length; i++) {
-      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard'>" + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove btn-sm' value='" + favorites[i] + "'>Remove</button></h2>" + "</li>");
+      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard'>"
+        + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove btn-sm' value='"
+        + favorites[i] + "'>Remove</button></h2>" + "</li>");
     }
   };
   
