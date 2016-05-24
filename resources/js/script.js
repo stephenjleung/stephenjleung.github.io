@@ -14,6 +14,66 @@
         }
   };
   
+  var originAndCode = {};
+  var originAndDescription = {};
+  var filepath1 = "resources/data/Origin-Code.csv";
+  var filepath2 = "resources/data/Origin-Description.csv";
+  
+  // CSV parsing function to convert 2-column CSV file to object
+  var csvToObject = function(filepath,obj){
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        // Action to be performed when the document is read;
+        var dataStr = xhttp.responseText;
+        var dataArr = dataStr.split("\n");
+        
+        for (var i = 0; i < dataArr.length; i++) {
+          var firstColArr = [];
+          var secondColArr = [];
+          var firstColStr = "";
+          var secondColStr = "";
+          var firstColComplete = false;
+          
+          for (var j = 0; j < dataArr[i].length; j++) {
+            if ((firstColComplete === true) && (dataArr[i][j] === '"')) {
+              continue;
+            }
+            else
+              if ((dataArr[i][j] == ",") && (firstColComplete === false)) {
+                firstColComplete = true;
+                continue;
+              }
+            else 
+              if (firstColComplete === false)
+                firstColArr.push(dataArr[i][j]);
+            else
+              secondColArr.push(dataArr[i][j]);
+          }
+          
+          firstColStr = firstColArr.join("");
+          secondColStr = secondColArr.join("");
+          obj[firstColStr] = secondColStr;
+          firstColArr = [];
+          secondColArr = [];
+          firstColStr = "";
+          secondColStr = "";
+          firstColComplete = false;  
+          }
+        }
+      };
+      xhttp.open("GET", filepath, false);
+      xhttp.send();
+  };
+  
+  csvToObject(filepath1, originAndCode);
+  csvToObject(filepath2, originAndDescription);
+  
+  console.log(originAndCode);
+  console.log(originAndDescription);
+  
+  
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(gender,num) {
     var xhttp = new XMLHttpRequest();
@@ -100,4 +160,12 @@
     updateFavorites();
     getRandomNames("m",6);
     
+    
+    
+    
+  //var originAndDescription = {};
+    
   };
+  
+  
+  
