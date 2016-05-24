@@ -13,6 +13,11 @@
   text-align: center;
 }
 
+.random-options {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .random-female-button {
   background-color: #EE83C6;
   border-color: #E964B8;

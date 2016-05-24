@@ -39,25 +39,26 @@
         <div><h3>Random Baby Name Generator</h3></div>
           
         <div>
-        Gender: 
-          <div class="btn-group" >
-            <label class="btn btn-info random-male-button">
-              <input type="radio" name="gender" id="random-m" value="m" autocomplete="off" checked>Male
-            </label>
-            <label class="btn btn-danger random-female-button">
-              <input type="radio" name="gender" id="random-f" value="f" autocomplete="off" >Female
-            </label>
+          <div class="random-options">
+            Gender: 
+            <div class="btn-group" >
+              <label class="btn btn-info random-male-button">
+                <input type="radio" name="gender" id="random-m" value="m" autocomplete="off" checked>Male
+              </label>
+              <label class="btn btn-danger random-female-button">
+                <input type="radio" name="gender" id="random-f" value="f" autocomplete="off" >Female
+              </label>
+            </div>
+          </div>
+          <div  class="random-options">
+            Origin:
+            <select id="origin-dropdown" name="origin">
+              <option value="eng">English</option>
+            </select>
           </div>
         </div>
         
-        <div>
-          Origin:
-          
-          <select name="origin">
-            <option value="eng">English</option>
-          </select>
-          
-        </div>
+
         
         <div>
           <button class="btn btn-primary" id="random-button">Get Random Baby Names</button>

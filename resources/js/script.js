@@ -19,7 +19,7 @@
   var filepath1 = "resources/data/Origin-Code.csv";
   var filepath2 = "resources/data/Origin-Description.csv";
   
-  // CSV parsing function to convert 2-column CSV file to object
+  // CSV parsing function to convert 2-column LOCAL CSV file to object
   var csvToObject = function(filepath,obj){
     var xhttp = new XMLHttpRequest();
     
@@ -70,12 +70,18 @@
   csvToObject(filepath1, originAndCode);
   csvToObject(filepath2, originAndDescription);
   
-  console.log(originAndCode);
-  console.log(originAndDescription);
+  //console.log(originAndCode);
+  //console.log(originAndDescription);  
   
+  // Loads the origin dropdown.  Utilizes the object created from the csvToObject function.  The Origin list is stored locally as a csv.
+  var loadOriginDropdown = function() {
+    for (var i in originAndCode) {
+      document.getElementById("origin-dropdown").insertAdjacentHTML("beforeend","<option value='" + originAndCode[i] + "'>" + i + "</option>");
+    }
+  };
   
   // Function to get random baby names based on filters (API GET-request here)
-  var getRandomNames = function(gender,num) {
+  var getRandomNames = function(gender,originCode,num) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -96,7 +102,7 @@
       }
     };
   
-    var apiLink = "http://www.behindthename.com/api/random.php?usage=eng&number=" + num + "&gender=" + gender + "&key=st918764";
+    var apiLink = "http://www.behindthename.com/api/random.php?usage=" + originCode + "&number=" + num + "&gender=" + gender + "&key=st918764";
     xhttp.open("GET", apiLink, true);
     xhttp.send();
   
@@ -140,7 +146,8 @@
     // Action triggered when "Get Random" button is clicked
     document.getElementById("random-button").onclick = function() {
       var gender = document.querySelector('input[name = "gender"]:checked').value;
-      getRandomNames(gender,6);
+      var originCode = document.getElementById("origin-dropdown").value;
+      getRandomNames(gender,originCode,6);
     };
     
     // Action triggered when you click the "Add" to favorites button
@@ -156,16 +163,14 @@
         addToFavorites(nameToAdd);
       }
     };
-  
+    
+    // Populate favorites list on page load
     updateFavorites();
-    getRandomNames("m",6);
     
+    // Populate initial random names (default filters)
+    getRandomNames("m","eng",6);
     
-    
-    
-  //var originAndDescription = {};
+    // Populate the Origin dropdown list
+    loadOriginDropdown();
     
   };
-  
-  
-  
