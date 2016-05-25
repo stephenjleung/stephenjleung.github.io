@@ -32,8 +32,8 @@
   var filepath2 = "resources/data/Origin-Description.csv";
   
   // CSV parsing function to convert 2-column LOCAL CSV file to object
-  // 3rd and 4th args are callback functions
-  var csvToObject = function(filepath, obj, loadOriginDropdown, updateOriginDescription){
+  
+  var csvToObject = function(filepath, obj){
     var xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function() {
@@ -84,10 +84,43 @@
       xhttp.send();
   };
   
-  csvToObject(filepath1, originAndCode, loadOriginDropdown, updateOriginDescription);
-  csvToObject(filepath2, originAndDescription, loadOriginDropdown, updateOriginDescription);
+  csvToObject(filepath1, originAndCode);
+  csvToObject(filepath2, originAndDescription);
   
-
+  
+  var filepath3 = "resources/data/yob2015.csv";
+  var names2015 = {"names":[]};
+  
+  // Converts a 2015 US Census csv file containing over 30,000 names into JSON format.
+  // Final JSON object is stored in the variable names2015.
+  
+  var csvToJSON = function(filepath){
+    
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        // Action to be performed when the document is read;
+        var dataStr = xhttp.responseText;
+        var dataArr = dataStr.split("\n");
+        var tempArr = [];
+        var tempObj = {};
+        
+        for (var i = 0; i < dataArr.length; i++) {
+          tempObj = {};
+          tempArr = dataArr[i].split(",");
+          tempObj.name = tempArr[0];
+          tempObj.gender = tempArr[1];
+          tempObj.frequency = tempArr[2];
+          names2015.names.push(tempObj);
+          }
+        }
+      };
+      xhttp.open("GET", filepath, true);
+      xhttp.send();
+  };
+  
+  csvToJSON(filepath3);
   
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(gender,originCode,num) {
@@ -98,27 +131,33 @@
         // Action to be performed when the document is read;
         var data = xhttp.responseXML;
         var x = data.getElementsByTagName("name");
-        var firstName = "";
-        
-        //Empties the list of random names in the DOM before generating a new list
-        emptyElementById("random-names-list");
+        var namesArr = [];
         
         // Generates the list of random names obtained from API call
         for (var i = 0; i < x.length; i++) {
-          firstName = x[i].textContent;
-          document.getElementById("random-names-list").insertAdjacentHTML("beforeend", 
-            "<li class='random-name'><h2><button class='btn btn-standard'>" + firstName + 
-            "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm random-name-add' value='"
-            + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+          namesArr.push(x[i].textContent);
         }
+        generateNamesList(namesArr,"random-names-list");
       }
     };
-    
     // The API call
     var apiLink = "http://www.behindthename.com/api/random.php?usage=" + originCode + "&number=" + num + "&gender=" + gender + "&key=st918764";
     xhttp.open("GET", apiLink, true);
     xhttp.send();
+  };
   
+  // Generates a list of names as buttons that you can add to favorites
+  var generateNamesList = function(namesArray,targetID) {
+    emptyElementById(targetID);
+    var firstName = "";
+    // Generates the list of random names obtained from API call
+    for (var i = 0; i < namesArray.length; i++) {
+      firstName = namesArray[i];
+      document.getElementById(targetID).insertAdjacentHTML("beforeend", 
+        "<li class='button-name'><h2><button class='btn btn-standard'>" + firstName + 
+        "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
+        + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+    }
   };
   
   // Function to add a name to favorites and update LocalStorage
@@ -157,12 +196,36 @@
   };
   
 
+  var searchTopTenGirlNames = function() {
+    var tempArr = names2015.names.filter(function(name){
+      if (name.gender == "F")
+        return name;
+    });
+    var finalArr = [];
+    for (var i = 0; i < 10; i++) {
+      finalArr.push(tempArr[i].name);
+    }
+    generateNamesList(finalArr,"search-results");
+  };
+  
+  var searchTopTenBoyNames = function() {
+    var tempArr = names2015.names.filter(function(name){
+      if (name.gender == "M")
+        return name;
+    });
+    var finalArr = [];
+    for (var i = 0; i < 10; i++) {
+      finalArr.push(tempArr[i].name);
+    }
+    generateNamesList(finalArr,"search-results");
+  };
+
   
   // Actions to be performed only after the window has loaded  
   window.onload = function(){
     // Action triggered when "Get Random" button is clicked
     document.getElementById("random-button").onclick = function() {
-      var gender = document.querySelector('input[name = "gender"]:checked').value;
+      var gender = document.querySelector('input[name = "random-gender"]:checked').value;
       var originCode = document.getElementById("origin-dropdown").value;
       getRandomNames(gender,originCode,6);
     };
@@ -186,4 +249,7 @@
     
     // Populate initial random names (default filters)
     getRandomNames("m","eng",6);
+    
+    
+    
   };

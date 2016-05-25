@@ -13,12 +13,12 @@
   margin-top: 20px;
 }
 
-.random-female-button {
+.female-button {
   background-color: #EE83C6;
   border-color: #E964B8;
 }
 
-.random-female-button:hover {
+.female-button:hover {
   background-color: #E964B8;
 }
 
@@ -56,14 +56,18 @@ ul {
   outline: 0;
 }
 
-.random-name-add {
+.button-name-add {
   display: none;
   cursor: pointer;
   margin-left: 10px;
   margin-top: 4px;
 }
 
-.random-name:hover .random-name-add{
+.button-name:hover .button-name-add{
   display: inline;
   position: absolute;
+}
+
+a:hover{
+  cursor: pointer;
 }

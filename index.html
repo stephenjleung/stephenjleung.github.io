@@ -16,8 +16,40 @@
       <h3>Your favorites list is stored in your browser's local storage, so feel free to refresh the page without losing your list!</h3>
     </div>
     <div class="container">
+
+      <div class="col col-md-4">
+        <div>
+          <h3>Baby Name Search</h3>
+          <h5><i>Based on over 30,000 popular baby names in the US in 2015</i></h5>
+          <div>
+            Quick Search:
+            <ul>
+              <li><a onclick='searchTopTenBoyNames()'>Top 10 Most Popular Boy Names</a></li>
+              <li><a onclick='searchTopTenGirlNames()'>Top 10 Most Popular Girl Names</a></li>
+            </ul>
+          </div>
+            <div class="search-options">
+            Gender: 
+            <div class="btn-group" >
+              <label class="btn btn-info male-button">
+                <input type="radio" name="search-gender" id="search-m" value="m" autocomplete="off" checked>Male
+              </label>
+              <label class="btn btn-danger female-button">
+                <input type="radio" name="search-gender" id="search-f" value="f" autocomplete="off" >Female
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="search-input"><button id="search-submit">Search</button>
+          </div>
+          <div>
+            <ul id="search-results">
+            </ul>
+          </div>
+        </div>
+      </div>
       
-      <div class="col col-md-8">
+      <div class="col col-md-4">
         <div>
           <h3>Random Baby Name Generator</h3>
         </div>
@@ -25,11 +57,11 @@
           <div class="random-options">
             Gender: 
             <div class="btn-group" >
-              <label class="btn btn-info random-male-button">
-                <input type="radio" name="gender" id="random-m" value="m" autocomplete="off" checked>Male
+              <label class="btn btn-info male-button">
+                <input type="radio" name="random-gender" id="random-m" value="m" autocomplete="off" checked>Male
               </label>
-              <label class="btn btn-danger random-female-button">
-                <input type="radio" name="gender" id="random-f" value="f" autocomplete="off" >Female
+              <label class="btn btn-danger female-button">
+                <input type="radio" name="random-gender" id="random-f" value="f" autocomplete="off" >Female
               </label>
             </div>
           </div>
