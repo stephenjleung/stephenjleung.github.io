@@ -4,7 +4,7 @@
   if (Boolean(window.localStorage._stephenjleung_favorites))
     var favorites = JSON.parse(window.localStorage.getItem('_stephenjleung_favorites'));
   else
-    favorites = ["Dave", "John", "Steve","Adam"];
+    favorites = ["Dave", "John", "Sarah","Brittany"];
   
   // Helper function to empty html contents by element ID
   var emptyElementById = function(id) {
@@ -14,13 +14,26 @@
         }
   };
   
+  // Loads the origin dropdown.  Utilizes the object created from the csvToObject function.  The Origin list is stored locally as a csv.
+  var loadOriginDropdown = function() {
+    for (var i in originAndCode) {
+      document.getElementById("origin-dropdown").insertAdjacentHTML("beforeend","<option value='" + originAndCode[i] + "'>" + i + "</option>");
+    }
+  };
+  
+  // Updates the Origin description in Random Generator area
+  var updateOriginDescription = function(origin) {
+    document.getElementById("origin-description").innerHTML = originAndDescription[origin];
+  };
+  
   var originAndCode = {};
   var originAndDescription = {};
   var filepath1 = "resources/data/Origin-Code.csv";
   var filepath2 = "resources/data/Origin-Description.csv";
   
   // CSV parsing function to convert 2-column LOCAL CSV file to object
-  var csvToObject = function(filepath,obj){
+  // 3rd and 4th args are callback functions
+  var csvToObject = function(filepath, obj, loadOriginDropdown, updateOriginDescription){
     var xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function() {
@@ -61,24 +74,20 @@
           secondColStr = "";
           firstColComplete = false;  
           }
+          
+        // After parsing is complete, load the items dependent on the CSV file data.
+        loadOriginDropdown();
+        updateOriginDescription("English");
         }
       };
-      // Setting ASYNC to false here generates a console warning, however I am not
-      // worried about it since the csv files are stored locally on the web server.
-      // It shouldn't cause browser hanging.
-      xhttp.open("GET", filepath, false);
+      xhttp.open("GET", filepath, true);
       xhttp.send();
   };
   
-  csvToObject(filepath1, originAndCode);
-  csvToObject(filepath2, originAndDescription);
+  csvToObject(filepath1, originAndCode, loadOriginDropdown, updateOriginDescription);
+  csvToObject(filepath2, originAndDescription, loadOriginDropdown, updateOriginDescription);
   
-  // Loads the origin dropdown.  Utilizes the object created from the csvToObject function.  The Origin list is stored locally as a csv.
-  var loadOriginDropdown = function() {
-    for (var i in originAndCode) {
-      document.getElementById("origin-dropdown").insertAdjacentHTML("beforeend","<option value='" + originAndCode[i] + "'>" + i + "</option>");
-    }
-  };
+
   
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(gender,originCode,num) {
@@ -147,10 +156,7 @@
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
   
-  // Updates the Origin description in Random Generator area
-  var updateOriginDescription = function(origin) {
-    document.getElementById("origin-description").innerHTML = originAndDescription[origin];
-  };
+
   
   // Actions to be performed only after the window has loaded  
   window.onload = function(){
@@ -174,17 +180,10 @@
         addToFavorites(nameToAdd);
       }
     };
-    
+
     // Populate favorites list on page load
     updateFavorites();
     
     // Populate initial random names (default filters)
     getRandomNames("m","eng",6);
-    
-    // Populate the Origin dropdown list
-    loadOriginDropdown();
-    
-    // Populate the initial Origin description
-    updateOriginDescription("English");
-    
   };
