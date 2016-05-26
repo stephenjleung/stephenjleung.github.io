@@ -12,7 +12,7 @@
 
 #search-results {
   text-align: left;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 #search-input {
@@ -61,10 +61,6 @@ ul {
 .favorite-item:hover .favorite-remove {
   display: inline;
   position: absolute;
-}
-
-.favorite-item button:focus {
-  outline: 0;
 }
 
 .rank {

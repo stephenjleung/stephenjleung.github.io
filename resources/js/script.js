@@ -117,6 +117,9 @@
           tempObj.rank = (i % 18993) + 1;
           names2015.names.push(tempObj);
           }
+          
+        // Display some search results on page load
+          searchTopTenBoyNames();
         }
       };
       xhttp.open("GET", filepath, true);
@@ -217,7 +220,6 @@
   var saveToLocalStorage = function(favorites) {
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
-  
 
   var searchTopTenGirlNames = function() {
     emptyElementById("search-results-count");
@@ -299,7 +301,8 @@
     document.getElementById("search-submit").onclick = function() {
       var gender = document.querySelector('input[name = "search-gender"]:checked').value;
       var nameToSearch = document.getElementById("search-input").value.toLowerCase();
-      searchNames(nameToSearch, gender);
+      if (nameToSearch != "")
+        searchNames(nameToSearch, gender);
     };
     
     // Action triggered when you press any key within the "Search" input field.
@@ -313,14 +316,16 @@
     document.getElementById("search-button-male").onclick = function() {
       var gender = document.querySelector('input[name = "search-gender"]:checked').value;
       var nameToSearch = document.getElementById("search-input").value.toLowerCase();
-      searchNames(nameToSearch, gender);
+      if (nameToSearch != "")
+        searchNames(nameToSearch, gender);
     };
     
     // Action triggered when toggling search gender
     document.getElementById("search-button-female").onclick = function() {
       var gender = document.querySelector('input[name = "search-gender"]:checked').value;
       var nameToSearch = document.getElementById("search-input").value.toLowerCase();
-      searchNames(nameToSearch, gender);
+      if (nameToSearch != "")
+        searchNames(nameToSearch, gender);
     };
     
     // Action triggered when "Get Random" button is clicked
