@@ -113,7 +113,7 @@
           tempObj.gender = tempArr[1];
           tempObj.frequency = tempArr[2];
           // The csv file first lists 18993 females before the male list starts.
-          // Starting a new rank numbering system when we get to the boys.
+          // beginning a new rank numbering system when we get to the boys.
           tempObj.rank = (i % 18993) + 1;
           names2015.names.push(tempObj);
           }
@@ -126,7 +126,7 @@
   csvToJSON(filepath3);
   
   // Function to get random baby names based on filters (API GET-request here)
-  var getRandomNames = function(gender,originCode,num) {
+  var getRandomNames = function(gender, originCode, num) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -150,7 +150,7 @@
   };
   
   // Generates a list of names as buttons that you can add to favorites
-  var generateNamesList = function(namesArray,targetID) {
+  var generateNamesList = function(namesArray, targetID) {
     
     if (typeof(namesArray[0]) === "string"){
       emptyElementById(targetID);
@@ -220,6 +220,7 @@
   
 
   var searchTopTenGirlNames = function() {
+    emptyElementById("search-results-count");
     var tempArr = names2015.names.filter(function(name){
       if (name.gender == "F")
         return name;
@@ -228,24 +229,79 @@
     for (var i = 0; i < 10; i++) {
       finalArr.push(tempArr[i]);
     }
+    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i>Displaying the top 10 most popular baby girl names in 2015</i>...");
     generateNamesList(finalArr,"search-results");
   };
   
   var searchTopTenBoyNames = function() {
+    emptyElementById("search-results-count");
     var tempArr = names2015.names.filter(function(name){
-      if (name.gender == "M")
+      if (name.gender === "M")
         return name;
     });
     var finalArr = [];
     for (var i = 0; i < 10; i++) {
       finalArr.push(tempArr[i]);
     }
+    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 10 most popular baby boy names in 2015</i>...");
     generateNamesList(finalArr,"search-results");
   };
-
+  
+  var searchNames = function(nameToSearch, gender) {
+    var tempArr = names2015.names.filter(function(name){
+      if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
+        return name;
+    });
+    
+    if (tempArr.length === 0) {
+      displayResultsCount(0, nameToSearch, gender);
+    }
+    
+    else
+      if (tempArr.length > 10) {
+        displayResultsCount(tempArr.length, nameToSearch, gender);
+        tempArr = tempArr.splice(0,10);
+        generateNamesList(tempArr,"search-results");
+      }
+    
+    else {
+      displayResultsCount(tempArr.length, nameToSearch, gender);
+      generateNamesList(tempArr,"search-results");
+    }
+    
+  };
+  
+  var displayResultsCount = function (count, nameToSearch, gender) {
+    if (gender === "M")
+      var gen = "male";
+    else
+      gen = "female";
+      
+    emptyElementById("search-results-count");
+    if (count === 0) {
+      emptyElementById("search-results");
+      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>0</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+    }
+    else
+      if (count > 10)
+        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + count + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>. Displaying the top 10 by popularity...");
+    else
+      if (count === 1)
+        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +count + "</strong> result for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+    else 
+      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "</i><strong>" +count + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+  };
   
   // Actions to be performed only after the window has loaded  
   window.onload = function(){
+    
+    // Action triggered when you click the "Search" button
+    document.getElementById("search-submit").onclick = function() {
+      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      searchNames(nameToSearch, gender);
+    };
+    
     // Action triggered when "Get Random" button is clicked
     document.getElementById("random-button").onclick = function() {
       var gender = document.querySelector('input[name = "random-gender"]:checked').value;
@@ -272,7 +328,5 @@
     
     // Populate initial random names (default filters)
     getRandomNames("m","eng",6);
-    
-    
     
   };
