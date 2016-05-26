@@ -9,6 +9,15 @@
   text-align: center;
 }
 
+#search-results {
+  text-align: left;
+  margin-left: 10px;
+}
+
+#search-input {
+  margin-top: 13px;
+}
+
 .random-options {
   margin-top: 20px;
 }
@@ -56,6 +65,14 @@ ul {
   outline: 0;
 }
 
+.rank {
+  margin-right: 5px;
+}
+
+.rank: hover {
+  cursor: default;
+}
+
 .button-name-add {
   display: none;
   cursor: pointer;
@@ -63,7 +80,7 @@ ul {
   margin-top: 4px;
 }
 
-.button-name:hover .button-name-add{
+.button-name:hover .button-name-add {
   display: inline;
   position: absolute;
 }

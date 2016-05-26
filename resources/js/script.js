@@ -112,6 +112,9 @@
           tempObj.name = tempArr[0];
           tempObj.gender = tempArr[1];
           tempObj.frequency = tempArr[2];
+          // The csv file first lists 18993 females before the male list starts.
+          // Starting a new rank numbering system when we get to the boys.
+          tempObj.rank = (i % 18993) + 1;
           names2015.names.push(tempObj);
           }
         }
@@ -148,16 +151,36 @@
   
   // Generates a list of names as buttons that you can add to favorites
   var generateNamesList = function(namesArray,targetID) {
-    emptyElementById(targetID);
-    var firstName = "";
-    // Generates the list of random names obtained from API call
-    for (var i = 0; i < namesArray.length; i++) {
-      firstName = namesArray[i];
-      document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-        "<li class='button-name'><h2><button class='btn btn-standard'>" + firstName + 
-        "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
-        + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+    
+    if (typeof(namesArray[0]) === "string"){
+      emptyElementById(targetID);
+      var firstName = "";
+      // Generates the list of random names obtained from API call
+      for (var i = 0; i < namesArray.length; i++) {
+        firstName = namesArray[i];
+        document.getElementById(targetID).insertAdjacentHTML("beforeend", 
+          "<li class='button-name'><h2><button class='btn btn-standard'>" + firstName + 
+          "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
+          + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+      }
     }
+    // This means we have an array of name objects; not just first name strings.
+    else {
+      emptyElementById(targetID);
+      var firstName = "";
+      var rank = 0;
+      for (var i = 0; i < namesArray.length; i++) {
+        firstName = namesArray[i].name;
+        rank = namesArray[i].rank;
+        document.getElementById(targetID).insertAdjacentHTML("beforeend", 
+          "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
+          "</button><button class='btn btn-standard'>" + firstName + 
+          "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
+          + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+      }
+      
+    }
+    
   };
   
   // Function to add a name to favorites and update LocalStorage
@@ -203,7 +226,7 @@
     });
     var finalArr = [];
     for (var i = 0; i < 10; i++) {
-      finalArr.push(tempArr[i].name);
+      finalArr.push(tempArr[i]);
     }
     generateNamesList(finalArr,"search-results");
   };
@@ -215,7 +238,7 @@
     });
     var finalArr = [];
     for (var i = 0; i < 10; i++) {
-      finalArr.push(tempArr[i].name);
+      finalArr.push(tempArr[i]);
     }
     generateNamesList(finalArr,"search-results");
   };
