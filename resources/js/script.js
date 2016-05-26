@@ -240,35 +240,35 @@
         return name;
     });
     var finalArr = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 10; i++)
       finalArr.push(tempArr[i]);
-    }
     document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 10 most popular baby boy names in 2015</i>...");
     generateNamesList(finalArr,"search-results");
   };
   
   var searchNames = function(nameToSearch, gender) {
-    var tempArr = names2015.names.filter(function(name){
-      if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
-        return name;
-    });
-    
-    if (tempArr.length === 0) {
-      displayResultsCount(0, nameToSearch, gender);
-    }
-    
-    else
-      if (tempArr.length > 10) {
+    if (nameToSearch != "") {
+      var tempArr = names2015.names.filter(function(name){
+        if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
+          return name;
+      });
+      if (tempArr.length === 0)
+        displayResultsCount(0, nameToSearch, gender);
+      else
+        if (tempArr.length > 10) {
+          displayResultsCount(tempArr.length, nameToSearch, gender);
+          tempArr = tempArr.splice(0,10);
+          generateNamesList(tempArr,"search-results");
+        }
+      else {
         displayResultsCount(tempArr.length, nameToSearch, gender);
-        tempArr = tempArr.splice(0,10);
         generateNamesList(tempArr,"search-results");
       }
-    
-    else {
-      displayResultsCount(tempArr.length, nameToSearch, gender);
-      generateNamesList(tempArr,"search-results");
     }
-    
+    else {
+      emptyElementById("search-results-count");
+      emptyElementById("search-results");
+    }
   };
   
   var displayResultsCount = function (count, nameToSearch, gender) {
@@ -297,6 +297,13 @@
     
     // Action triggered when you click the "Search" button
     document.getElementById("search-submit").onclick = function() {
+      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      searchNames(nameToSearch, gender);
+    };
+    
+    // Action triggered when you press Enter within the "Search" input field.
+    document.getElementById("search-input").onkeyup = function() {
       var gender = document.querySelector('input[name = "search-gender"]:checked').value;
       var nameToSearch = document.getElementById("search-input").value.toLowerCase();
       searchNames(nameToSearch, gender);
