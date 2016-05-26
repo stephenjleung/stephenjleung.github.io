@@ -229,7 +229,7 @@
     for (var i = 0; i < 10; i++) {
       finalArr.push(tempArr[i]);
     }
-    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i>Displaying the top 10 most popular baby girl names in 2015</i>...");
+    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i>Displaying the top 10 most popular baby girl names</i>...");
     generateNamesList(finalArr,"search-results");
   };
   
@@ -242,7 +242,7 @@
     var finalArr = [];
     for (var i = 0; i < 10; i++)
       finalArr.push(tempArr[i]);
-    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 10 most popular baby boy names in 2015</i>...");
+    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 10 most popular baby boy names</i>...");
     generateNamesList(finalArr,"search-results");
   };
   
@@ -289,7 +289,7 @@
       if (count === 1)
         document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +count + "</strong> result for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
     else 
-      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "</i><strong>" +count + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +count + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
   };
   
   // Actions to be performed only after the window has loaded  
@@ -302,8 +302,22 @@
       searchNames(nameToSearch, gender);
     };
     
-    // Action triggered when you press Enter within the "Search" input field.
+    // Action triggered when you press any key within the "Search" input field.
     document.getElementById("search-input").onkeyup = function() {
+      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      searchNames(nameToSearch, gender);
+    };
+    
+    // Action triggered when toggling search gender
+    document.getElementById("search-button-male").onclick = function() {
+      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      searchNames(nameToSearch, gender);
+    };
+    
+    // Action triggered when toggling search gender
+    document.getElementById("search-button-female").onclick = function() {
       var gender = document.querySelector('input[name = "search-gender"]:checked').value;
       var nameToSearch = document.getElementById("search-input").value.toLowerCase();
       searchNames(nameToSearch, gender);
