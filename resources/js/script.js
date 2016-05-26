@@ -129,7 +129,7 @@
   csvToJSON(filepath3);
   
   // Function to get random baby names based on filters (API GET-request here)
-  var getRandomNames = function(gender, originCode, num) {
+  var getRandomNames = function(randomGender, originCode, num) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -147,7 +147,7 @@
       }
     };
     // The API call
-    var apiLink = "http://www.behindthename.com/api/random.php?usage=" + originCode + "&number=" + num + "&gender=" + gender + "&key=st918764";
+    var apiLink = "http://www.behindthename.com/api/random.php?usage=" + originCode + "&number=" + num + "&gender=" + randomGender + "&key=st918764";
     xhttp.open("GET", apiLink, true);
     xhttp.send();
   };
@@ -248,50 +248,90 @@
     generateNamesList(finalArr,"search-results");
   };
   
-  var searchNames = function(nameToSearch, gender) {
+  // Global variables to keep track of current search info to display proper results set.
+  var searchResultsCount = 0;
+  var currentSearchPage = 0;
+  var resultsArr = [];
+  var nameToSearch = "";
+  var gender = "";
+  
+  var resetGlobalSearchCounters = function() {
+    searchResultsCount = 0;
+    currentSearchPage = 0;
+    resultsArr = [];
+    nameToSearch = "";
+    gender = "";
+  };
+  
+  var searchNames = function() {
     if (nameToSearch != "") {
-      var tempArr = names2015.names.filter(function(name){
+      var tempArr = [];
+      resultsArr = names2015.names.filter(function(name){
         if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
           return name;
-      });
-      if (tempArr.length === 0)
-        displayResultsCount(0, nameToSearch, gender);
+      }).slice();
+      
+      currentSearchPage = 0;
+      searchResultsCount = resultsArr.length;
+      
+      if (searchResultsCount === 0)
+        displayResultsCount(0);
       else
-        if (tempArr.length > 10) {
-          displayResultsCount(tempArr.length, nameToSearch, gender);
-          tempArr = tempArr.splice(0,10);
+        if (searchResultsCount > 10) {
+          displayResultsCount();
+          tempArr = resultsArr.slice(currentSearchPage*10,currentSearchPage*10+10);
           generateNamesList(tempArr,"search-results");
         }
       else {
-        displayResultsCount(tempArr.length, nameToSearch, gender);
-        generateNamesList(tempArr,"search-results");
+        displayResultsCount();
+        generateNamesList(resultsArr,"search-results");
       }
     }
     else {
+      resetGlobalSearchCounters();
       emptyElementById("search-results-count");
       emptyElementById("search-results");
     }
   };
   
-  var displayResultsCount = function (count, nameToSearch, gender) {
+  var changeSearchResultsPage = function(next) {
+    // If the "next" button was clicked...
+    if (next && (searchResultsCount / ((currentSearchPage+1)*10)>1)) {
+      currentSearchPage++;
+      var tempArr = resultsArr.slice(currentSearchPage*10,currentSearchPage*10+10);
+      generateNamesList(tempArr,"search-results");
+      displayResultsCount();
+    }
+    // If the previous button was clicked and you are not on the first page...
+    else if (!next && currentSearchPage > 0) {
+      currentSearchPage--;
+      tempArr = resultsArr.slice(currentSearchPage*10,currentSearchPage*10+10);
+      generateNamesList(tempArr,"search-results");
+      displayResultsCount();
+    }
+  };
+  
+  var displayResultsCount = function () {
     if (gender === "M")
       var gen = "male";
     else
       gen = "female";
       
     emptyElementById("search-results-count");
-    if (count === 0) {
+    if (searchResultsCount === 0) {
       emptyElementById("search-results");
       document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>0</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
     }
     else
-      if (count > 10)
-        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + count + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>. Displaying the top 10 by popularity...");
+      if (searchResultsCount === 1)
+        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +searchResultsCount + "</strong> result for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
     else
-      if (count === 1)
-        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +count + "</strong> result for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+      if (searchResultsCount > 10) {
+        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>. Displaying the top 10 by popularity...");
+        document.getElementById("search-results-count").insertAdjacentHTML("beforeend","<div id='search-nav'><button onclick='changeSearchResultsPage(false)' id='search-prev'>Prev</button> " + (currentSearchPage*10+1) + "-" + (currentSearchPage*10+10) + " <button onclick='changeSearchResultsPage(true)' id='search-next'>Next</button></div>");
+      }
     else 
-      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +count + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
   };
   
   // Actions to be performed only after the window has loaded  
@@ -299,40 +339,40 @@
     
     // Action triggered when you click the "Search" button
     document.getElementById("search-submit").onclick = function() {
-      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      nameToSearch = document.getElementById("search-input").value.toLowerCase();
       if (nameToSearch != "")
-        searchNames(nameToSearch, gender);
+        searchNames();
     };
     
     // Action triggered when you press any key within the "Search" input field.
     document.getElementById("search-input").onkeyup = function() {
-      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
-      searchNames(nameToSearch, gender);
+      gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      searchNames();
     };
     
     // Action triggered when toggling search gender
     document.getElementById("search-button-male").onclick = function() {
-      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      nameToSearch = document.getElementById("search-input").value.toLowerCase();
       if (nameToSearch != "")
-        searchNames(nameToSearch, gender);
+        searchNames();
     };
     
     // Action triggered when toggling search gender
     document.getElementById("search-button-female").onclick = function() {
-      var gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      var nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      gender = document.querySelector('input[name = "search-gender"]:checked').value;
+      nameToSearch = document.getElementById("search-input").value.toLowerCase();
       if (nameToSearch != "")
-        searchNames(nameToSearch, gender);
+        searchNames();
     };
     
     // Action triggered when "Get Random" button is clicked
     document.getElementById("random-button").onclick = function() {
-      var gender = document.querySelector('input[name = "random-gender"]:checked').value;
+      var randomGender = document.querySelector('input[name = "random-gender"]:checked').value;
       var originCode = document.getElementById("origin-dropdown").value;
-      getRandomNames(gender,originCode,6);
+      getRandomNames(randomGender,originCode,6);
     };
     
     // Action triggered when you click the "Add" to favorites button
