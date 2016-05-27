@@ -105,6 +105,8 @@
         var dataArr = dataStr.split("\n");
         var tempArr = [];
         var tempObj = {};
+        var maleStartIndex = 0;
+        var maleStartIndexFound = false;
         
         for (var i = 0; i < dataArr.length; i++) {
           tempObj = {};
@@ -112,14 +114,25 @@
           tempObj.name = tempArr[0];
           tempObj.gender = tempArr[1];
           tempObj.frequency = tempArr[2];
-          // The csv file first lists 18993 females before the male list starts.
-          // beginning a new rank numbering system when we get to the boys.
-          tempObj.rank = (i % 18993) + 1;
+          
+          // The csv file first lists females before the male list starts.
+          // I reset the rank numbering system when we get to the boys during iteration.
+          // Loading different year files will have the boys starting at a different index.
+          if (maleStartIndexFound === false)
+            if (tempObj.gender === "M") {
+              maleStartIndex = i;
+              maleStartIndexFound = true;
+            }
+          
+          if (maleStartIndexFound === true)
+            tempObj.rank = (i % maleStartIndex) + 1;
+          else 
+            tempObj.rank = i + 1;
           names2015.names.push(tempObj);
           }
           
         // Display some search results on page load
-          searchTopNames("M");
+          searchTopNames("boy");
         }
       };
       xhttp.open("GET", filepath, true);
@@ -181,9 +194,7 @@
           "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
           + firstName + "'>Add to Favorites</button></h2>" + "</li>");
       }
-      
     }
-    
   };
   
   // Function to add a name to favorites and update LocalStorage
@@ -221,25 +232,6 @@
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
 
-
-  var searchTopNames = function(gen) {
-    gender = gen;
-    quickSearch = true;
-    var tempArr = [];
-    
-    emptyElementById("search-results-count");
-    
-    resultsArr = names2015.names.filter(function(name){
-      if (name.gender === gender)
-        return name;
-    }).slice(0,99);
-    
-    searchResultsCount = resultsArr.length;
-    tempArr = resultsArr.slice(currentSearchPage*10,currentSearchPage*10+10);
-    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 100 most popular baby boy names</i>...");
-    generateNamesList(tempArr,"search-results");
-  };
-  
   // Global variables to keep track of current search info to display proper results set.
   var searchResultsCount = 0;
   var currentSearchPage = 0;
@@ -256,14 +248,41 @@
     gender = "";
     quickSearch = false;
   };
+
+  var searchTopNames = function(gen) {
+    resetGlobalSearchCounters();
+    emptyElementById("search-results-count");
+    
+    if (gen === "boy")
+      gender = "M";
+    else
+      gender = "F";
+    
+    quickSearch = true;
+    var tempArr = [];
+    
+    resultsArr = names2015.names.filter(function(name){
+      if (name.gender === gender)
+        return name;
+    }).slice(0,100);
+    
+    searchResultsCount = resultsArr.length;
+    tempArr = resultsArr.slice(currentSearchPage*10,currentSearchPage*10+10);
+    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 100 most popular " + gen + " names</i>...");
+    searchNames();
+  };
+  
   
   var searchNames = function() {
     if ((nameToSearch != "") || quickSearch) {
-      var tempArr = [];
-      resultsArr = names2015.names.filter(function(name){
-        if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
-          return name;
-      }).slice();
+      
+      if (!quickSearch) {
+        var tempArr = [];
+        resultsArr = names2015.names.filter(function(name){
+          if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
+            return name;
+        }).slice();
+      }
       
       currentSearchPage = 0;
       searchResultsCount = resultsArr.length;
@@ -310,8 +329,18 @@
       var gen = "male";
     else
       gen = "female";
-      
-    emptyElementById("search-results-count");
+    
+    if (quickSearch) {
+      if (gender === "M")
+        gen = "boy";
+      else
+        gen = "girl";
+      emptyElementById("search-results-count");
+      document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 100 most popular baby " + gen + " names</i>...");
+    }
+    else
+      emptyElementById("search-results-count");
+    
     if (searchResultsCount === 0) {
       emptyElementById("search-results");
       document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>0</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
@@ -321,14 +350,15 @@
         document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +searchResultsCount + "</strong> result for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
     else
       if (searchResultsCount > 10) {
-        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
+        if (!quickSearch)
+          document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
         document.getElementById("search-results-count").insertAdjacentHTML("beforeend","<div id='search-nav'><button onclick='changeSearchResultsPage(false)' id='search-prev'>Prev</button> " + (currentSearchPage*10+1) + "-" + (currentSearchPage*10+10) + " <button onclick='changeSearchResultsPage(true)' id='search-next'>Next</button></div>");
       }
     else 
       document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
   };
   
-  // Actions to be performed only after the window has loaded  
+  // Actions to be performed only after the window has loaded. Mostly event-listeners 
   window.onload = function(){
     
     // Action triggered when you click the "Search" button
