@@ -1,13 +1,13 @@
 .header {
-/*Gradient from http://www.cssmatic.com/gradient-generator  ffcff7 + 7fc3ff*/
-background: rgba(127,195,255,1);
-background: -moz-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
-background: -webkit-gradient(left top, right top, color-stop(0%, rgba(127,195,255,1)), color-stop(100%, rgba(255,207,247,1)));
-background: -webkit-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
-background: -o-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
-background: -ms-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
-background: linear-gradient(to right, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7fc3ff', endColorstr='#ffcff7', GradientType=1 );
+  /*Gradient from http://www.cssmatic.com/gradient-generator  ffcff7 + 7fc3ff*/
+  background: rgba(127,195,255,1);
+  background: -moz-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(127,195,255,1)), color-stop(100%, rgba(255,207,247,1)));
+  background: -webkit-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
+  background: -o-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
+  background: -ms-linear-gradient(left, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
+  background: linear-gradient(to right, rgba(127,195,255,1) 0%, rgba(255,207,247,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7fc3ff', endColorstr='#ffcff7', GradientType=1 );
 }
 
 .well {

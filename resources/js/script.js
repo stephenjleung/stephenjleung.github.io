@@ -161,6 +161,7 @@
     };
     // The API call
     var apiLink = "http://www.behindthename.com/api/random.php?usage=" + originCode + "&number=" + num + "&gender=" + randomGender + "&key=st918764";
+    
     xhttp.open("GET", apiLink, true);
     xhttp.send();
   };
