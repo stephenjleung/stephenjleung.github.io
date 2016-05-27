@@ -11,7 +11,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7fc3ff', end
 }
 
 .well {
-  background-color: #F9FFE8;
+  background-color: white;
+  padding: 10px;
 }
 
 body {
@@ -20,22 +21,25 @@ body {
 }
 
 .header {
-  
   text-align: center;
-  padding: 20px;
   color: #333;
   text-shadow: 2px 2px #F9FFE8;
+  padding: 10px;
+  margin-top: -10px;
+}
+
+.col-wrap {
+  margin-top: 20px;
 }
 
 .col {
   /*border: 1px solid black;*/
   text-align: center;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 #search-results {
   text-align: left;
-  margin-left: 20px;
 }
 
 #search-input {
@@ -43,7 +47,11 @@ body {
 }
 
 #search-nav {
-  margin: 20px;
+  margin: 10px;
+}
+
+.search-result-list {
+  margin-top:-15px;
 }
 
 .random-options {

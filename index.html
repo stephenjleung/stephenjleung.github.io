@@ -11,7 +11,7 @@
     
 <body>
   <div>
-    <div class="jumbotron header">
+    <div class="header">
       <h1>Your Baby Naming Toolbox</h1>
     </div>
     <div class="container-fluid">
@@ -21,9 +21,7 @@
           <div class="col col-md-12 well">
             <div>
               <h3>Baby Name Search</h3>
-              <h5><i>Find names and popularity based on over 30,000 popular baby names in the US in 2015.</i></h5>
               <div>
-                Quick Search:
                 <ul>
                   <li><a onclick='searchTopNames("boy")'>Top 100 Most Popular Baby Boy Names</a></li>
                   <li><a onclick='searchTopNames("girl")'>Top 100 Most Popular Baby Girl Names</a></li>
@@ -45,7 +43,9 @@
               </div>
               <div>
                 <div id="search-results-count"></div>
-                <ul id="search-results">
+                <div class="col col-md-10 col-md-offset-2 search-result-list">
+                  <ul id="search-results">
+                </div>
                 </ul>
               </div>
             </div>
