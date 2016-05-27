@@ -119,7 +119,7 @@
           }
           
         // Display some search results on page load
-          searchTopTenBoyNames();
+          searchTopNames("M");
         }
       };
       xhttp.open("GET", filepath, true);
@@ -221,31 +221,23 @@
     window.localStorage.setItem('_stephenjleung_favorites',JSON.stringify(favorites));
   };
 
-  var searchTopTenGirlNames = function() {
+
+  var searchTopNames = function(gen) {
+    gender = gen;
+    quickSearch = true;
+    var tempArr = [];
+    
     emptyElementById("search-results-count");
-    var tempArr = names2015.names.filter(function(name){
-      if (name.gender == "F")
+    
+    resultsArr = names2015.names.filter(function(name){
+      if (name.gender === gender)
         return name;
-    });
-    var finalArr = [];
-    for (var i = 0; i < 10; i++) {
-      finalArr.push(tempArr[i]);
-    }
-    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i>Displaying the top 10 most popular baby girl names</i>...");
-    generateNamesList(finalArr,"search-results");
-  };
-  
-  var searchTopTenBoyNames = function() {
-    emptyElementById("search-results-count");
-    var tempArr = names2015.names.filter(function(name){
-      if (name.gender === "M")
-        return name;
-    });
-    var finalArr = [];
-    for (var i = 0; i < 10; i++)
-      finalArr.push(tempArr[i]);
-    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 10 most popular baby boy names</i>...");
-    generateNamesList(finalArr,"search-results");
+    }).slice(0,99);
+    
+    searchResultsCount = resultsArr.length;
+    tempArr = resultsArr.slice(currentSearchPage*10,currentSearchPage*10+10);
+    document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i> Displaying the top 100 most popular baby boy names</i>...");
+    generateNamesList(tempArr,"search-results");
   };
   
   // Global variables to keep track of current search info to display proper results set.
@@ -254,6 +246,7 @@
   var resultsArr = [];
   var nameToSearch = "";
   var gender = "";
+  var quickSearch = false;
   
   var resetGlobalSearchCounters = function() {
     searchResultsCount = 0;
@@ -261,10 +254,11 @@
     resultsArr = [];
     nameToSearch = "";
     gender = "";
+    quickSearch = false;
   };
   
   var searchNames = function() {
-    if (nameToSearch != "") {
+    if ((nameToSearch != "") || quickSearch) {
       var tempArr = [];
       resultsArr = names2015.names.filter(function(name){
         if ((name.gender === gender) && (name.name.toLowerCase().startsWith(nameToSearch)))
@@ -327,7 +321,7 @@
         document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +searchResultsCount + "</strong> result for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
     else
       if (searchResultsCount > 10) {
-        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>. Displaying the top 10 by popularity...");
+        document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" + searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
         document.getElementById("search-results-count").insertAdjacentHTML("beforeend","<div id='search-nav'><button onclick='changeSearchResultsPage(false)' id='search-prev'>Prev</button> " + (currentSearchPage*10+1) + "-" + (currentSearchPage*10+10) + " <button onclick='changeSearchResultsPage(true)' id='search-next'>Next</button></div>");
       }
     else 
@@ -339,6 +333,7 @@
     
     // Action triggered when you click the "Search" button
     document.getElementById("search-submit").onclick = function() {
+      quickSearch = false;
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
       nameToSearch = document.getElementById("search-input").value.toLowerCase();
       if (nameToSearch != "")
@@ -347,6 +342,7 @@
     
     // Action triggered when you press any key within the "Search" input field.
     document.getElementById("search-input").onkeyup = function() {
+      quickSearch = false;
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
       nameToSearch = document.getElementById("search-input").value.toLowerCase();
       searchNames();
