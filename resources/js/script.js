@@ -4,7 +4,7 @@
   if (Boolean(window.localStorage._stephenjleung_favorites))
     var favorites = JSON.parse(window.localStorage.getItem('_stephenjleung_favorites'));
   else
-    favorites = ["Dave", "John", "Sarah","Brittany"];
+    favorites = [];
   
   // Helper function to empty html contents by element ID
   var emptyElementById = function(id) {
@@ -132,7 +132,7 @@
           }
           
         // Display some search results on page load
-          searchTopNames("boy");
+          //searchTopNames("boy");
         }
       };
       xhttp.open("GET", filepath, true);
@@ -419,6 +419,6 @@
     updateFavorites();
     
     // Populate initial random names (default filters)
-    getRandomNames("m","eng",6);
+    //getRandomNames("m","eng",6);
     
   };
