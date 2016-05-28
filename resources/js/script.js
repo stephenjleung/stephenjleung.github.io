@@ -192,8 +192,8 @@
         document.getElementById(targetID).insertAdjacentHTML("beforeend", 
           "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
           "</button><button class='btn btn-standard'>" + firstName + 
-          "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
-          + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+          "</button>  <button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm button-name-add' value='"
+          + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>This is the meaning of the thingy.</span></h2>" + "</li>");
       }
     }
   };

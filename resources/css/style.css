@@ -11,13 +11,15 @@
 }
 
 .well {
-  background-color: white;
+  background-color: #e6f3ff;
   padding: 10px;
+  
 }
 
 body {
   font-family: sans-serif;
-  background-color: #2C9AFC;
+  background-color: #fff;
+  /*background-color: #2C9AFC;*/
 }
 
 .header {
@@ -81,6 +83,16 @@ ul {
   list-style-type: none;
 }
 
+.favorite-hover-button {
+  background-color: #EE83C6;
+  border-color: #E964B8;
+  color: white;
+}
+.favorite-hover-button:hover {
+  background-color: #E964B8;
+  color: white;
+}
+
 .favorite-item {
   list-style: none;
   margin-bottom: -10px;
@@ -125,3 +137,21 @@ ul {
 a:hover{
   cursor: pointer;
 }
+
+.meaning {
+  display: none;
+  position: absolute;
+  font-size: 16px;
+  font-weight: normal;
+  margin-left: 50px;
+  margin-top: 7px;
+  z-index:1;
+  /*margin-top: 35px;
+  margin-left: 15px;*/
+}
+
+
+.button-name:hover .meaning {
+  display: inline;
+}
+
