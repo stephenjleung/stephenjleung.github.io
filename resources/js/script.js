@@ -1,4 +1,6 @@
-  //baby name api key st918764
+  // baby name api key st918764
+  // names and meanings from http://introcs.cs.princeton.edu/java/data/
+  
   
   // Loads a saved or default Favorites list
   if (Boolean(window.localStorage._stephenjleung_favorites))
@@ -28,8 +30,10 @@
   
   var originAndCode = {};
   var originAndDescription = {};
+  var namesToMeanings = {};
   var filepath1 = "resources/data/Origin-Code.csv";
   var filepath2 = "resources/data/Origin-Description.csv";
+  var filepath3 = "resources/data/names-meanings.csv";
   
   // CSV parsing function to convert 2-column LOCAL CSV file to object
   
@@ -86,9 +90,10 @@
   
   csvToObject(filepath1, originAndCode);
   csvToObject(filepath2, originAndDescription);
+  csvToObject(filepath3, namesToMeanings);
   
   
-  var filepath3 = "resources/data/yob2015.csv";
+  var filepath4 = "resources/data/yob2015.csv";
   var names2015 = {"names":[]};
   
   // Converts a 2015 US Census csv file containing over 30,000 names into JSON format.
@@ -139,7 +144,7 @@
       xhttp.send();
   };
   
-  csvToJSON(filepath3);
+  csvToJSON(filepath4);
   
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(randomGender, originCode, num) {
