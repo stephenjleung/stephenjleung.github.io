@@ -30,7 +30,7 @@
   
   var originAndCode = {};
   var originAndDescription = {};
-  var namesToMeanings = {};
+  var namesAndMeanings = {};
   var filepath1 = "resources/data/Origin-Code.csv";
   var filepath2 = "resources/data/Origin-Description.csv";
   var filepath3 = "resources/data/names-meanings.csv";
@@ -90,7 +90,7 @@
   
   csvToObject(filepath1, originAndCode);
   csvToObject(filepath2, originAndDescription);
-  csvToObject(filepath3, namesToMeanings);
+  csvToObject(filepath3, namesAndMeanings);
   
   
   var filepath4 = "resources/data/yob2015.csv";
@@ -120,6 +120,10 @@
           tempObj.gender = tempArr[1];
           tempObj.frequency = tempArr[2];
           
+          // Add the name meaning to the global object if we know it
+          if (namesAndMeanings.hasOwnProperty(tempObj.name.toUpperCase()))
+            tempObj.meaning = namesAndMeanings[tempObj.name.toUpperCase()];
+          
           // The csv file first lists females before the male list starts.
           // I reset the rank numbering system when we get to the boys during iteration.
           // Loading different year files will have the boys starting at a different index.
@@ -135,7 +139,7 @@
             tempObj.rank = i + 1;
           names2015.names.push(tempObj);
           }
-          
+        
         // Display some search results on page load
           //searchTopNames("boy");
         }
@@ -191,14 +195,23 @@
       emptyElementById(targetID);
       var firstName = "";
       var rank = 0;
+      var meaning = "";
+      
       for (var i = 0; i < namesArray.length; i++) {
         firstName = namesArray[i].name;
         rank = namesArray[i].rank;
+        
+        if (namesArray[i].hasOwnProperty("meaning"))
+          meaning = namesArray[i].meaning;
+        else
+          meaning = "Name meaning not found...";
+        
         document.getElementById(targetID).insertAdjacentHTML("beforeend", 
           "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
           "</button><button class='btn btn-standard'>" + firstName + 
           "</button>  <button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm button-name-add' value='"
-          + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>This is the meaning of the thingy.</span></h2>" + "</li>");
+          + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
+          + meaning + "</span></h2>" + "</li>");
       }
     }
   };
