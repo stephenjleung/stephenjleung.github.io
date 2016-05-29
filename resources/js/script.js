@@ -82,6 +82,10 @@
         // After parsing is complete, load the items dependent on the CSV file data.
         loadOriginDropdown();
         updateOriginDescription("English");
+        
+        // Load csvToJSON only after filepath3 is loaded.
+        if (filepath === filepath3)
+          csvToJSON(filepath4);
         }
       };
       xhttp.open("GET", filepath, true);
@@ -148,7 +152,7 @@
       xhttp.send();
   };
   
-  csvToJSON(filepath4);
+  
   
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(randomGender, originCode, num) {
@@ -187,7 +191,7 @@
         document.getElementById(targetID).insertAdjacentHTML("beforeend", 
           "<li class='button-name'><h2><button class='btn btn-standard'>" + firstName + 
           "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
-          + firstName + "'>Add to Favorites</button></h2>" + "</li>");
+          + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button></h2>" + "</li>");
       }
     }
     // This means we have an array of name objects; not just first name strings.
@@ -206,12 +210,24 @@
         else
           meaning = "Name meaning not found...";
         
-        document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-          "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
-          "</button><button class='btn btn-standard'>" + firstName + 
-          "</button>  <button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm button-name-add' value='"
-          + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
-          + meaning + "</span></h2>" + "</li>");
+        // If the name is favorited, always display heart icon beside it.
+        if (favorites.indexOf(firstName) > -1) {
+          document.getElementById(targetID).insertAdjacentHTML("beforeend", 
+            "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
+            "</button><button class='btn btn-standard'>" + firstName + 
+            "</button><button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm favorited' value='"
+            + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
+            + meaning + "</span></h2>" + "</li>");
+          
+        }
+        // Else, display the normal button
+        else
+          document.getElementById(targetID).insertAdjacentHTML("beforeend", 
+            "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
+            "</button><button class='btn btn-standard'>" + firstName + 
+            "</button><button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm button-name-add' value='"
+            + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
+            + meaning + "</span></h2>" + "</li>");
       }
     }
   };

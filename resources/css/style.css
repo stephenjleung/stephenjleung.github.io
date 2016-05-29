@@ -93,6 +93,10 @@ ul {
   color: white;
 }
 
+.favorite-hover-button:focus {
+  color: white;
+}
+
 .favorite-item {
   list-style: none;
   margin-bottom: -10px;
@@ -125,7 +129,7 @@ ul {
 .button-name-add {
   display: none;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 5px;
   margin-top: 4px;
 }
 
@@ -155,3 +159,10 @@ a:hover{
   display: inline;
 }
 
+.favorited {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 4px;
+}
