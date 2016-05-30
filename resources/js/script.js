@@ -190,7 +190,7 @@
         firstName = namesArray[i];
         document.getElementById(targetID).insertAdjacentHTML("beforeend", 
           "<li class='button-name'><h2><button class='btn btn-standard'>" + firstName + 
-          "</button><button onclick='addToFavorites(value)' class='btn btn-success btn-sm button-name-add' value='"
+          "</button><button onclick='addToFavorites(value, this)' class='btn btn-sm favorite-hover-button button-name-add' value='"
           + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button></h2>" + "</li>");
       }
     }
@@ -215,7 +215,7 @@
           document.getElementById(targetID).insertAdjacentHTML("beforeend", 
             "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
             "</button><button class='btn btn-standard'>" + firstName + 
-            "</button><button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm favorited' value='"
+            "</button><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button button-name-add btn-sm favorited' id='favorite-icon-"+ firstName + "' value='"
             + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
             + meaning + "</span></h2>" + "</li>");
           
@@ -225,7 +225,7 @@
           document.getElementById(targetID).insertAdjacentHTML("beforeend", 
             "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
             "</button><button class='btn btn-standard'>" + firstName + 
-            "</button><button onclick='addToFavorites(value)' class='btn favorite-hover-button btn-sm button-name-add' value='"
+            "</button><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button btn-sm button-name-add' value='"
             + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
             + meaning + "</span></h2>" + "</li>");
       }
@@ -233,22 +233,30 @@
   };
   
   // Function to add a name to favorites and update LocalStorage
-  var addToFavorites = function(name) {
+  var addToFavorites = function(name, el) {
     if ((name != "") && (favorites.indexOf(name) < 0)) {
       favorites.push(name);
       saveToLocalStorage(favorites);
       document.getElementById("favorite-input").value = "";
+      if (Boolean(el)) {
+        el.classList.add("favorited");
+        el.setAttribute("id", "favorite-icon-" + name);
+      }
       updateFavorites();
     }
   };
   
   // Function to remove a specific name from the favorites list
-  var removeFromFavorites = function(name) {
+  var removeFromFavorites = function(name, el) {
     var index = favorites.indexOf(name);
     if (index > -1) {
       favorites.splice(index, 1);
       saveToLocalStorage(favorites);
       updateFavorites();
+      if (Boolean(document.getElementById("favorite-icon-" + name))) {
+        document.getElementById("favorite-icon-" + name).classList.remove("favorited");
+        document.getElementById("favorite-icon-" + name).removeAttribute("id");
+      }
     }
   };
   

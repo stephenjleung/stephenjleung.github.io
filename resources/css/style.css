@@ -150,10 +150,7 @@ a:hover{
   margin-left: 50px;
   margin-top: 7px;
   z-index:1;
-  /*margin-top: 35px;
-  margin-left: 15px;*/
 }
-
 
 .button-name:hover .meaning {
   display: inline;
