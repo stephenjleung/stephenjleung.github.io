@@ -103,15 +103,22 @@ ul {
 }
 
 .favorite-remove {
-  display: none;
+  display: inline-block;
+  position: absolute;
   cursor: pointer;
   margin-left: 10px;
-  margin-top: 4px;
+  margin-top: 6px;
+  opacity: 0.1;
 }
 
 .favorite-item:hover .favorite-remove {
   display: inline;
   position: absolute;
+  transition: all 0.3s ease 0s;
+  opacity: 1;
+  transform: scale(1.1);
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Chrome, Safari, Opera */
 }
 
 .button-name {
@@ -119,15 +126,21 @@ ul {
 }
 
 .button-name-add {
-  display: none;
+  display: inline-block;
+  position: absolute;
   cursor: pointer;
   margin-left: 5px;
   margin-top: 4px;
+  opacity: 0.1;
 }
 
 .button-name:hover .button-name-add {
-  display: inline;
-  position: absolute;
+  display: inline-block;
+  transition: all 0.3s ease 0s;
+  opacity: 1;
+  transform: scale(1.1);
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Chrome, Safari, Opera */
 }
 
 a:hover{
@@ -135,17 +148,23 @@ a:hover{
 }
 
 .meaning {
-  display: none;
+  display: inline-block;
   position: absolute;
   font-size: 16px;
   font-weight: normal;
   margin-left: 50px;
   margin-top: 7px;
   z-index:1;
+  opacity: 0;
 }
 
 .button-name:hover .meaning {
-  display: inline;
+  
+  transition: all 0.3s ease 0s;
+  opacity: 1;
+  transform: scale(1.1);
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Chrome, Safari, Opera */
 }
 
 .favorited {
@@ -154,6 +173,7 @@ a:hover{
   cursor: pointer;
   margin-left: 5px;
   margin-top: 4px;
+  opacity: 1;
 }
 
 #info-search, #info-rng, #info-favorites {
@@ -165,7 +185,7 @@ a:hover{
   color: black;
   font-size: 18px;
   font-weight: normal;
-  
+  border: 1px solid #bbb;
 }
 
 .rank-label {
