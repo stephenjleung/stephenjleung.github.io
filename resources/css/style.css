@@ -163,3 +163,7 @@ a:hover{
   margin-left: 5px;
   margin-top: 4px;
 }
+
+#info-search, #info-rng, #info-favorites {
+  font-size: 16px;
+}
