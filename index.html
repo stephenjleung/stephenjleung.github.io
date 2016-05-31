@@ -22,14 +22,22 @@
         <div class="col col-md-12 well">
           <div>
             <h3>Baby Name Search <i class="fa fa-info-circle" id="info-search" aria-hidden="true"></i></h3>
-            <div>
+            <hr>
+            <div class="quick-search">
               <ul>
+                <li><h4><i>Quick Search</h4></i></li>
                 <li><a onclick='searchTopNames("boy")'>Top 100 Most Popular Baby Boy Names</a></li>
                 <li><a onclick='searchTopNames("girl")'>Top 100 Most Popular Baby Girl Names</a></li>
               </ul>
             </div>
+            <hr>
+            
+            
             <div class="search-options">
-              Gender: 
+              <div class="manual-search">
+                <h4><i>Manual Search</i></h4>
+              </div>
+               
               <div class="btn-group" >
                 <label class="btn btn-info male-button" id="search-button-male">
                   <input type="radio" name="search-gender" id="search-m" value="M" autocomplete="off" checked>Male
@@ -42,6 +50,7 @@
             <div class="form-group">
               <input type="text" id="search-input" placeholder='Name begins with...' autofocus><button id="search-submit">Search</button>
             </div>
+            <hr>
             <div>
               <div id="search-results-count"></div>
               <div class="col col-md-11 col-md-offset-1 search-result-list">
@@ -58,9 +67,9 @@
           <div>
             <h3>Random Baby Name Generator <i class="fa fa-info-circle" id="info-rng" aria-hidden="true"></i></h3>
           </div>
+          <hr>
           <div>
             <div class="random-options">
-              Gender: 
               <div class="btn-group" >
                 <label class="btn btn-info male-button">
                   <input type="radio" name="random-gender" id="random-m" value="m" autocomplete="off" checked>Male
@@ -93,7 +102,8 @@
         <div class="col col-md-12 well">
           <div>
             <h3>Favorites List <i class="fa fa-info-circle" id="info-favorites" aria-hidden="true"></i></h3> 
-            <h5>Your favorites list is stored in your browser's local storage, so feel free to refresh the page without losing your list!</h5>
+            <hr>
+            <!--<h5>Your favorites list is stored in your browser's local storage, so feel free to refresh the page without losing your list!</h5>-->
             <div class="form-group">
               <input type="text" id="favorite-input" placeholder="Add to favorites..."><button id="favorite-button-add">Add</button>
             </div>

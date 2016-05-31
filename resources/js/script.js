@@ -244,6 +244,9 @@
       }
       updateFavorites();
     }
+    else 
+      if ((favorites.indexOf(name) > -1) && (Boolean(el)))
+        removeFromFavorites(name, el);
   };
   
   // Function to remove a specific name from the favorites list
