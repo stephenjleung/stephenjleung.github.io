@@ -114,14 +114,6 @@ ul {
   position: absolute;
 }
 
-.rank {
-  margin-right: 5px;
-}
-
-.rank: hover {
-  cursor: default;
-}
-
 .button-name {
   margin-bottom: -10px;
 }
@@ -166,4 +158,22 @@ a:hover{
 
 #info-search, #info-rng, #info-favorites {
   font-size: 16px;
+}
+
+.name-label {
+  background-color: #ddd;
+  color: black;
+  font-size: 18px;
+  font-weight: normal;
+  
+}
+
+.rank-label {
+  margin-right: 10px;
+  font-weight: normal;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  border: 1px solid #ccc;
 }

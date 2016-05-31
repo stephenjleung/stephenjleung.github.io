@@ -189,8 +189,8 @@
       for (var i = 0; i < namesArray.length; i++) {
         firstName = namesArray[i];
         document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-          "<li class='button-name'><h2><button class='btn btn-standard'>" + firstName + 
-          "</button><button onclick='addToFavorites(value, this)' class='btn btn-sm favorite-hover-button button-name-add' value='"
+          "<li class='button-name'><h2><span class='label label-default name-label'>" + firstName + 
+          "</span><button onclick='addToFavorites(value, this)' class='btn btn-sm favorite-hover-button button-name-add' value='"
           + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button></h2>" + "</li>");
       }
     }
@@ -213,9 +213,9 @@
         // If the name is favorited, always display heart icon beside it.
         if (favorites.indexOf(firstName) > -1) {
           document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-            "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
-            "</button><button class='btn btn-standard'>" + firstName + 
-            "</button><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button button-name-add btn-sm favorited' id='favorite-icon-"+ firstName + "' value='"
+            "<li class='button-name'><h2><span class='label label-default rank-label'>" + "Rank: " + rank + 
+            "</span><span class='label label-default name-label'>" + firstName + 
+            "</span><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button button-name-add btn-sm favorited' id='favorite-icon-"+ firstName + "' value='"
             + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
             + meaning + "</span></h2>" + "</li>");
           
@@ -223,9 +223,9 @@
         // Else, display the normal button
         else
           document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-            "<li class='button-name'><h2><button class='btn btn-default rank'>" + "Rank: " + rank + 
-            "</button><button class='btn btn-standard'>" + firstName + 
-            "</button><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button btn-sm button-name-add' value='"
+            "<li class='button-name'><h2><span class='label label-default rank-label'>" + "Rank: " + rank + 
+            "</span><span class='label label-default name-label'>" + firstName + 
+            "</span><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button btn-sm button-name-add' value='"
             + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
             + meaning + "</span></h2>" + "</li>");
       }
@@ -264,8 +264,8 @@
   var updateFavorites = function() {
     emptyElementById("favorites-list");
     for (var i = 0; i < favorites.length; i++) {
-      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><button class='btn btn-standard'>"
-        + favorites[i] + "</button><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove btn-sm' value='"
+      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><span class='label label-default name-label'>"
+        + favorites[i] + "</span><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove btn-sm' value='"
         + favorites[i] + "'>Remove</button></h2>" + "</li>");
     }
   };
