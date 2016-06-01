@@ -18,26 +18,29 @@
     </div>
     <div class="container-fluid col-wrap">
       
+      
       <div class="col col-md-4">
-        <div class="col col-md-12 well">
-          <div>
-            <h3>Baby Name Search <i class="fa fa-info-circle" id="info-search" aria-hidden="true"></i></h3>
-            <hr>
-            <div class="quick-search">
-              <ul>
-                <li><h4><i>Quick Search</h4></i></li>
-                <li><a onclick='searchTopNames("boy")'>Top 100 Most Popular Baby Boy Names</a></li>
-                <li><a onclick='searchTopNames("girl")'>Top 100 Most Popular Baby Girl Names</a></li>
-              </ul>
-            </div>
-            <hr>
+        <div class="col col-md-12 well baby-search-well">
+        
+          
+          <h3>Baby Name Search <i class="fa fa-info-circle" id="info-search" aria-hidden="true"></i></h3>
+          <hr>
+          
+          <div class="search-row">
             
-            
-            <div class="search-options">
-              <div class="manual-search">
-                <h4><i>Manual Search</i></h4>
+            <div class="">
+              <div class="well quick-search">
+                <ul>
+                  <li><h4>Quick Search</h4></li>
+                  <li><a onclick='searchTopNames("boy")'>100 Most Popular Baby Boy Names</a></li>
+                  <li><a onclick='searchTopNames("girl")'>100 Most Popular Baby Girl Names</a></li>
+                </ul>
               </div>
-               
+            </div>
+            <div class="well manual-search">
+              <div>
+                <h4>Manual Search</h4>
+              </div>
               <div class="btn-group" >
                 <label class="btn btn-info male-button" id="search-button-male">
                   <input type="radio" name="search-gender" id="search-m" value="M" autocomplete="off" checked>Male
@@ -46,17 +49,14 @@
                   <input type="radio" name="search-gender" id="search-f" value="F" autocomplete="off" >Female
                 </label>
               </div>
-            </div>
-            <div class="form-group">
-              <input type="text" id="search-input" placeholder='Name begins with...' autofocus><button id="search-submit">Search</button>
-            </div>
-            <hr>
-            <div>
-              <div id="search-results-count"></div>
-              <div class="col col-md-11 col-md-offset-1 search-result-list">
-                <ul id="search-results">
+              
+              <div class="form-group">
+                <input type="text" id="search-input" placeholder='Name begins with...' autofocus><button id="search-submit">Search</button>
               </div>
-              </ul>
+            </div>
+            <div id="search-results-count"></div>
+            <div class="col col-md-8 col-md-offset-2 search-result-list">
+              <ul id="search-results"></ul>
             </div>
           </div>
         </div>
@@ -96,7 +96,7 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div>      
       
       <div class="col col-md-4">
         <div class="col col-md-12 well">
@@ -113,7 +113,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>      
       
     </div>
   </div>

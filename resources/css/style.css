@@ -11,11 +11,10 @@
 }
 
 hr {
-  border-color: #e3e3e3;
+  border-color: #bbb;
 }
 .well {
   background-color: #e6f3ff;
-  padding: 10px;
 }
 
 body {
@@ -39,7 +38,7 @@ body {
 .col {
   /*border: 1px solid black;*/
   text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
 }
 
 #search-results {
@@ -54,10 +53,20 @@ body {
   margin: 10px;
 }
 
+.quick-search, .manual-search {
+  background-color: #f1f1f1;
+  margin: 5px 20px 5px 20px;
+  padding: 8px;
+  border: 1px solid #bbb;
+}
 
+#search-results-count {
+  margin-top: 12px;
+}
 
 .search-result-list {
-  margin-top:-15px;
+  margin-top:-18px;
+  margin-bottom:-30px;
 }
 
 .random-options {
@@ -112,7 +121,7 @@ ul {
   cursor: pointer;
   margin-left: 10px;
   margin-top: 6px;
-  opacity: 0.1;
+  opacity: 0;
 }
 
 .favorite-item:hover .favorite-remove {
@@ -135,7 +144,7 @@ ul {
   cursor: pointer;
   margin-left: 5px;
   margin-top: 6px;
-  opacity: 0.1;
+  opacity: 0;
 }
 
 .button-name:hover .button-name-add {
@@ -156,8 +165,8 @@ a:hover{
   position: absolute;
   font-size: 16px;
   font-weight: normal;
-  margin-left: 50px;
-  margin-top: 7px;
+  margin-left: 53px;
+  margin-top: 9px;
   z-index:1;
   opacity: 0;
 }
@@ -201,3 +210,8 @@ a:hover{
   padding: 6px;
   border: 1px solid #ccc;
 }
+
+input {
+  padding-left: 5px;
+}
+

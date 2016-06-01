@@ -244,6 +244,7 @@
       }
       updateFavorites();
     }
+    
     else 
       if ((favorites.indexOf(name) > -1) && (Boolean(el)))
         removeFromFavorites(name, el);
