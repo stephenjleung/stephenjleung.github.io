@@ -189,7 +189,7 @@ a:hover{
   opacity: 1;
 }
 
-#info-search, #info-rng, #info-favorites {
+#info-search-icon, #info-rng-icon, #info-favorites-icon {
   font-size: 16px;
 }
 
@@ -234,11 +234,11 @@ input {
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
+    background-color: #FFE6FF;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 25%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -256,7 +256,34 @@ input {
     cursor: pointer;
 }
 
-#exported-favorites-list {
-  list-style-type: none;
+#export-favorites-list li {
+
+  text-align: left;
+  padding-left: 10px;
+
 }
 
+#info-search-description {
+
+
+
+}
+
+.info-search:hover ~ #info-search-description{
+
+  opacity: 1;
+}
+
+.info-descriptions {
+  z-index: 1;
+  position: absolute;
+  opacity: 0;
+  background-color: white;
+  margin-right: 20px;
+  border-color: black;
+}
+
+
+.sub-header {
+  font-size: 28px;
+}
