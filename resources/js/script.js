@@ -1,5 +1,6 @@
   // baby name api key st918764
-  // names and meanings from http://introcs.cs.princeton.edu/java/data/
+  // names to meanings from http://introcs.cs.princeton.edu/java/data/
+  // names database from https://www.ssa.gov/oact/babynames/limits.html
   
   
   // Loads a saved or default Favorites list
@@ -36,7 +37,6 @@
   var filepath3 = "resources/data/names-meanings.csv";
   
   // CSV parsing function to convert 2-column LOCAL CSV file to object
-  
   var csvToObject = function(filepath, obj){
     var xhttp = new XMLHttpRequest();
     
@@ -152,8 +152,6 @@
       xhttp.send();
   };
   
-  
-  
   // Function to get random baby names based on filters (API GET-request here)
   var getRandomNames = function(randomGender, originCode, num) {
     var xhttp = new XMLHttpRequest();
@@ -197,7 +195,7 @@
     // This means we have an array of name objects; not just first name strings.
     else {
       emptyElementById(targetID);
-      var firstName = "";
+      firstName = "";
       var rank = 0;
       var meaning = "";
       
@@ -408,7 +406,7 @@
   // Actions to be performed only after the window has loaded. Mostly event-listeners 
   window.onload = function(){
     
-    /*--------- Modal controls -----------*/
+    /*--------- Favorites List Modal controls -----------*/
 
     var modal = document.getElementById('export-modal');
     var btn = document.getElementById("export-modal-button");
@@ -438,7 +436,7 @@
             modal.style.display = "none";
         }
     }
-    /*--------- Modal controls -----------*/    
+    /*-------------------------------------------------*/    
     
     // Action triggered when you click the "Search" button
     document.getElementById("search-submit").onclick = function() {
@@ -496,9 +494,5 @@
 
     // Populate favorites list on page load
     updateFavorites();
-    
-    
-    
-
     
   };
