@@ -19,9 +19,8 @@
   
   // Loads the origin dropdown.  Utilizes the object created from the csvToObject function.  The Origin list is stored locally as a csv.
   var loadOriginDropdown = function() {
-    for (var i in originAndCode) {
+    for (var i in originAndCode)
       document.getElementById("origin-dropdown").insertAdjacentHTML("beforeend","<option value='" + originAndCode[i] + "'>" + i + "</option>");
-    }
   };
   
   // Updates the Origin description in Random Generator area
@@ -29,6 +28,7 @@
     document.getElementById("origin-description").innerHTML = originAndDescription[origin];
   };
   
+  // Global variables for storing parsed data
   var originAndCode = {};
   var originAndDescription = {};
   var namesAndMeanings = {};
@@ -39,7 +39,6 @@
   // CSV parsing function to convert 2-column LOCAL CSV file to object
   var csvToObject = function(filepath, obj){
     var xhttp = new XMLHttpRequest();
-    
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
         // Action to be performed when the document is read;
@@ -92,6 +91,7 @@
       xhttp.send();
   };
   
+  // Begin parsing of files
   csvToObject(filepath1, originAndCode);
   csvToObject(filepath2, originAndDescription);
   csvToObject(filepath3, namesAndMeanings);
@@ -102,11 +102,8 @@
   
   // Converts a 2015 US Census csv file containing over 30,000 names into JSON format.
   // Final JSON object is stored in the variable names2015.
-  
   var csvToJSON = function(filepath){
-    
     var xhttp = new XMLHttpRequest();
-    
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
         // Action to be performed when the document is read;
@@ -179,16 +176,15 @@
   
   // Generates a list of names as buttons that you can add to favorites
   var generateNamesList = function(namesArray, targetID) {
-    
-    if (typeof(namesArray[0]) === "string"){
+    if (typeof(namesArray[0]) === "string") {
       emptyElementById(targetID);
       var firstName = "";
       // Generates the list of random names obtained from API call
       for (var i = 0; i < namesArray.length; i++) {
         firstName = namesArray[i];
         document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-          "<li class='button-name'><h2><span class='label label-default name-label'>" + firstName + 
-          "</span><button onclick='addToFavorites(value, this)' class='btn btn-sm favorite-hover-button button-name-add' value='"
+          "<li class='label-name'><h2><span class='label label-default name-label-appearance'>" + firstName + 
+          "</span><button onclick='addToFavorites(value, this)' class='btn btn-sm favorite-hover-button label-name-add' value='"
           + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button></h2>" + "</li>");
       }
     }
@@ -211,19 +207,18 @@
         // If the name is favorited, always display heart icon beside it.
         if (favorites.indexOf(firstName) > -1) {
           document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-            "<li class='button-name'><h2><span class='label label-default rank-label'>" + "Rank: " + rank + 
-            "</span><span class='label label-default name-label'>" + firstName + 
-            "</span><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button button-name-add btn-sm favorited' id='favorite-icon-"+ firstName + "' value='"
+            "<li class='label-name'><h2><span class='label label-default rank-label'>" + "Rank: " + rank + 
+            "</span><span class='label label-default name-label-appearance'>" + firstName + 
+            "</span><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button label-name-add btn-sm favorited' id='favorite-icon-"+ firstName + "' value='"
             + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
             + meaning + "</span></h2>" + "</li>");
-          
         }
         // Else, display the normal button
         else
           document.getElementById(targetID).insertAdjacentHTML("beforeend", 
-            "<li class='button-name'><h2><span class='label label-default rank-label'>" + "Rank: " + rank + 
-            "</span><span class='label label-default name-label'>" + firstName + 
-            "</span><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button btn-sm button-name-add' value='"
+            "<li class='label-name'><h2><span class='label label-default rank-label'>" + "Rank: " + rank + 
+            "</span><span class='label label-default name-label-appearance'>" + firstName + 
+            "</span><button onclick='addToFavorites(value, this)' class='btn favorite-hover-button btn-sm label-name-add' value='"
             + firstName + "'><i class='fa fa-heart' aria-hidden='true'></i></button><span class='label label-default meaning'>"
             + meaning + "</span></h2>" + "</li>");
       }
@@ -242,7 +237,6 @@
       }
       updateFavorites();
     }
-    
     else 
       if ((favorites.indexOf(name) > -1) && (Boolean(el)))
         removeFromFavorites(name, el);
@@ -266,7 +260,7 @@
   var updateFavorites = function() {
     emptyElementById("favorites-list");
     for (var i = 0; i < favorites.length; i++) {
-      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><span class='label label-default name-label'>"
+      document.getElementById("favorites-list").insertAdjacentHTML("beforeend", "<li class='favorite-item'><h2><span class='label label-default name-label-appearance'>"
         + favorites[i] + "</span><button onclick='removeFromFavorites(value)' class='btn btn-danger favorite-remove btn-sm' value='"
         + favorites[i] + "'>Remove</button></h2>" + "</li>");
     }
@@ -285,6 +279,7 @@
   var gender = "";
   var quickSearch = false;
   
+  // Function to reset global search counters to begin new search query
   var resetGlobalSearchCounters = function() {
     searchResultsCount = 0;
     currentSearchPage = 0;
@@ -294,6 +289,7 @@
     quickSearch = false;
   };
 
+  // Quick-search, 100 most popular names
   var searchTopNames = function(gen) {
     resetGlobalSearchCounters();
     emptyElementById("search-results-count");
@@ -317,7 +313,7 @@
     searchNames();
   };
   
-  
+  // To retrieve search results for the provided query.  Parameters stored in global variables.
   var searchNames = function() {
     if ((nameToSearch != "") || quickSearch) {
       
@@ -352,6 +348,7 @@
     }
   };
   
+  // Controls the Prev-Next buttons and limits 10 names per page
   var changeSearchResultsPage = function(next) {
     // If the "next" button was clicked...
     if (next && (searchResultsCount / ((currentSearchPage+1)*10)>1)) {
@@ -369,6 +366,7 @@
     }
   };
   
+  // Displays the number of search results for the given query
   var displayResultsCount = function () {
     if (gender === "M")
       var gen = "male";
@@ -405,38 +403,6 @@
   
   // Actions to be performed only after the window has loaded. Mostly event-listeners 
   window.onload = function(){
-    
-    /*--------- Favorites List Modal controls -----------*/
-
-    var modal = document.getElementById('export-modal');
-    var btn = document.getElementById("export-modal-button");
-    var span = document.getElementsByClassName("close-modal")[0];
-    var content = document.getElementById("export-favorites-list");
-    
-    // When the user clicks on the button, open the modal 
-    btn.onclick = function() {
-      
-      emptyElementById("export-favorites-list");
-      
-      for (var i = 0; i < favorites.length; i++) {
-        content.insertAdjacentHTML("beforeend", "<li>" + favorites[i] + "</li>");
-      }
-      
-      modal.style.display = "block";
-    }
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    /*-------------------------------------------------*/    
     
     // Action triggered when you click the "Search" button
     document.getElementById("search-submit").onclick = function() {
@@ -491,6 +457,38 @@
         addToFavorites(nameToAdd);
       }
     };
+    
+    /*--------- Favorites List Modal Controls BEGIN -----------*/
+
+    var modal = document.getElementById('export-modal');
+    var btn = document.getElementById("export-modal-button");
+    var span = document.getElementsByClassName("close-modal")[0];
+    var content = document.getElementById("export-favorites-list");
+    
+    // When the user clicks on the button, open the modal 
+    btn.onclick = function() {
+      
+      emptyElementById("export-favorites-list");
+      
+      for (var i = 0; i < favorites.length; i++) {
+        content.insertAdjacentHTML("beforeend", "<li>" + favorites[i] + "</li>");
+      }
+      
+      modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    /*--------- Favorites List Modal Controls END -----------*/ 
 
     // Populate favorites list on page load
     updateFavorites();
