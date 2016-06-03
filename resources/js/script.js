@@ -402,14 +402,15 @@
       document.getElementById("search-results-count").insertAdjacentHTML("beforeend", "<i><strong>" +searchResultsCount + "</strong> results for <strong>" + gen + "</strong> names beginning with <strong>" + nameToSearch + "</strong></i>...");
   };
   
-  // Actions to be performed only after the window has loaded. Mostly event-listeners 
+  // Actions to be performed only after the window has loaded. Mostly event-listeners
+  // Regex used to sanitize user input fields.  Only accepting alphanumerics, underscore, and dashes.
   window.onload = function(){
     
     // Action triggered when you click the "Search" button
     document.getElementById("search-submit").onclick = function() {
       quickSearch = false;
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^\w-]+/g,'');
       if (nameToSearch != "")
         searchNames();
     };
@@ -418,14 +419,14 @@
     document.getElementById("search-input").onkeyup = function() {
       quickSearch = false;
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^\w-]+/g,'');
       searchNames();
     };
     
     // Action triggered when toggling search gender
     document.getElementById("search-button-male").onclick = function() {
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^\w-]+/g,'');
       if (nameToSearch != "")
         searchNames();
     };
@@ -433,7 +434,7 @@
     // Action triggered when toggling search gender
     document.getElementById("search-button-female").onclick = function() {
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^\w-]+/g,'');
       if (nameToSearch != "")
         searchNames();
     };
@@ -447,14 +448,14 @@
     
     // Action triggered when you click the "Add" to favorites button
     document.getElementById("favorite-button-add").onclick = function() {
-      var nameToAdd = document.getElementById("favorite-input").value.replace(/[^a-z0-9]/gi,'');
+      var nameToAdd = document.getElementById("favorite-input").value.replace(/[^\w-]+/g,'');
       addToFavorites(nameToAdd);
     };
     
     // Action triggered when you press Enter within the Favorites List input field
     document.getElementById("favorite-input").onkeypress = function(e) {
       if (e.which == 13) {
-        var nameToAdd = document.getElementById("favorite-input").value.replace(/[^a-z0-9]/gi,'');
+        var nameToAdd = document.getElementById("favorite-input").value.replace(/[^\w-]+/g,'');
         addToFavorites(nameToAdd);
       }
     };
