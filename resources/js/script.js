@@ -96,7 +96,6 @@
   csvToObject(filepath2, originAndDescription);
   csvToObject(filepath3, namesAndMeanings);
   
-  
   var filepath4 = "resources/data/yob2015.csv";
   var names2015 = {"names":[]};
   
