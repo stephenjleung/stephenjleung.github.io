@@ -446,7 +446,7 @@
     
     // Action triggered when you click the "Add" to favorites button
     document.getElementById("favorite-button-add").onclick = function() {
-      var nameToAdd = document.getElementById("favorite-input").value;
+      var nameToAdd = document.getElementById("favorite-input").value.replace(/[^a-z0-9]/gi,'');
       addToFavorites(nameToAdd);
     };
     
