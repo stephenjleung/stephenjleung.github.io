@@ -138,6 +138,7 @@
             tempObj.rank = (i % maleStartIndex) + 1;
           else 
             tempObj.rank = i + 1;
+            
           names2015.names.push(tempObj);
           }
         
@@ -366,7 +367,7 @@
     }
   };
   
-  // Displays the number of search results for the given query
+  // Displays the number of search results and search details for the given query
   var displayResultsCount = function () {
     if (gender === "M")
       var gen = "male";
@@ -408,7 +409,7 @@
     document.getElementById("search-submit").onclick = function() {
       quickSearch = false;
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
       if (nameToSearch != "")
         searchNames();
     };
@@ -417,14 +418,14 @@
     document.getElementById("search-input").onkeyup = function() {
       quickSearch = false;
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
       searchNames();
     };
     
     // Action triggered when toggling search gender
     document.getElementById("search-button-male").onclick = function() {
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
       if (nameToSearch != "")
         searchNames();
     };
@@ -432,7 +433,7 @@
     // Action triggered when toggling search gender
     document.getElementById("search-button-female").onclick = function() {
       gender = document.querySelector('input[name = "search-gender"]:checked').value;
-      nameToSearch = document.getElementById("search-input").value.toLowerCase();
+      nameToSearch = document.getElementById("search-input").value.toLowerCase().replace(/[^a-z0-9]/gi,'');
       if (nameToSearch != "")
         searchNames();
     };
@@ -453,7 +454,7 @@
     // Action triggered when you press Enter within the Favorites List input field
     document.getElementById("favorite-input").onkeypress = function(e) {
       if (e.which == 13) {
-        var nameToAdd = document.getElementById("favorite-input").value;
+        var nameToAdd = document.getElementById("favorite-input").value.replace(/[^a-z0-9]/gi,'');
         addToFavorites(nameToAdd);
       }
     };
